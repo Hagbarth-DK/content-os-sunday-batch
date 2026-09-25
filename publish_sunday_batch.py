@@ -118,7 +118,7 @@ def validate(props):
 
 def create_media_container(video_url, caption):
     url = (
-        f"https://graph.facebook.com/{GRAPH_VERSION}/{IG_BUSINESS_ACCOUNT_ID}/media"
+        f"https://graph.instagram.com/{GRAPH_VERSION}/{IG_BUSINESS_ACCOUNT_ID}/media"
         f"?media_type=REELS"
         f"&video_url={urllib.parse.quote(video_url, safe='')}"
         f"&caption={urllib.parse.quote(caption, safe='')}"
@@ -132,7 +132,7 @@ def create_media_container(video_url, caption):
 
 def wait_for_container(container_id, timeout_seconds=600, interval_seconds=10):
     url = (
-        f"https://graph.facebook.com/{GRAPH_VERSION}/{container_id}"
+        f"https://graph.instagram.com/{GRAPH_VERSION}/{container_id}"
         f"?fields=status_code&access_token={IG_ACCESS_TOKEN}"
     )
     waited = 0
@@ -152,7 +152,7 @@ def wait_for_container(container_id, timeout_seconds=600, interval_seconds=10):
 
 def publish_container(container_id):
     url = (
-        f"https://graph.facebook.com/{GRAPH_VERSION}/{IG_BUSINESS_ACCOUNT_ID}/media_publish"
+        f"https://graph.instagram.com/{GRAPH_VERSION}/{IG_BUSINESS_ACCOUNT_ID}/media_publish"
         f"?creation_id={container_id}&access_token={IG_ACCESS_TOKEN}"
     )
     status, data = http("POST", url)
