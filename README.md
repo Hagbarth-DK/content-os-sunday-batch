@@ -40,7 +40,7 @@ Tilføj disse fire (indsæt værdierne selv — Claude må aldrig skrive dem ind
 | `NOTION_API_KEY`           | Din nye Notion internal integration secret (trin 1)      |
 | `NOTION_DATABASE_ID`       | Dit Content Library database-id (trin 2)                 |
 | `IG_ACCESS_TOKEN`          | Instagram Graph API access token (allerede i Notion under "🔐 Graph API Credentials — Content OS Publisher") |
-| `IG_BUSINESS_ACCOUNT_ID`   | `1784142981340239`                                        |
+| `IG_BUSINESS_ACCOUNT_ID`   | `29003355762581760` (Instagram-scoped id for `hagbarth.skjold`, fundet via `graph.instagram.com/v21.0/me` — IKKE det gamle Facebook Page-linked id `1784142981340239`, som fejler med denne token-type) |
 
 ### 5. Bekræft at planen er aktiv
 GitHub Actions kører kun schemalagte workflows på repoets standardbranch (typisk
@@ -65,3 +65,8 @@ Access tokenet er ikke verificeret til at være long-lived. Hvis søndagskørsle
 begynder at fejle med en 401/190-fejl, er tokenet sandsynligvis udløbet — det skal
 så gengenereres via Meta for Developers og opdateres som GitHub secret. Dette er
 endnu ikke testet i praksis (se "Åbne punkter" i Notion-credentials-siden).
+
+## Status
+Første fulde end-to-end-kørsel lykkedes 2026-09-25 (run #5): posten
+"04 — Fire ting der stopper din fremdrift" blev publiceret til Instagram og
+Notion-status opdateret til "Published" — helt uden manuelle klik.
