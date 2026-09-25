@@ -175,7 +175,14 @@ def mark_published(page_id):
         raise RuntimeError(f"Kunne ikke opdatere Notion ({status}): {data}")
 
 
+def debug_whoami():
+    url = f"https://graph.instagram.com/{GRAPH_VERSION}/me?fields=id,username&access_token={IG_ACCESS_TOKEN}"
+    status, data = http("GET", url)
+    print(f"DEBUG /me ({status}): {data}")
+
+
 def main():
+    debug_whoami()
     posts = fetch_scheduled_posts()
     if not posts:
         print("Ingen poster klar til publicering i dag.")
