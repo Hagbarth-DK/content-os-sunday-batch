@@ -10,7 +10,9 @@ Env vars (sat som GitHub Secrets):
   NOTION_API_KEY        - Notion internal integration secret
   NOTION_DATABASE_ID    - Content Library database id
   IG_ACCESS_TOKEN       - Instagram Graph API access token
-  IG_BUSINESS_ACCOUNT_ID- Instagram business account id (1784142981340239)
+  IG_BUSINESS_ACCOUNT_ID- Instagram-scoped account id for dette token (fra
+                           graph.instagram.com/v21.0/me, ikke det gamle
+                           Facebook Page-linked id)
 
 Logik (spejler "Sondagsbatch — opskrift" i Claude Operating Manual):
   1. Hent alle poster med Status = "Scheduled" og Publiceringsdato <= i dag.
@@ -175,14 +177,7 @@ def mark_published(page_id):
         raise RuntimeError(f"Kunne ikke opdatere Notion ({status}): {data}")
 
 
-def debug_whoami():
-    url = f"https://graph.instagram.com/{GRAPH_VERSION}/me?fields=id,username&access_token={IG_ACCESS_TOKEN}"
-    status, data = http("GET", url)
-    print(f"DEBUG /me ({status}): {data}")
-
-
 def main():
-    debug_whoami()
     posts = fetch_scheduled_posts()
     if not posts:
         print("Ingen poster klar til publicering i dag.")
