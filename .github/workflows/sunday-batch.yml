@@ -1,0 +1,27 @@
+name: Søndagsbatch — Instagram publicering
+
+on:
+  schedule:
+    # Kører hver søndag kl. 09:00 UTC (11:00 dansk sommertid / 10:00 vintertid)
+    - cron: "0 9 * * 0"
+  workflow_dispatch: {}  # tillader manuel kørsel fra Actions-fanen til test
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Kør søndagsbatch
+        env:
+          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          IG_BUSINESS_ACCOUNT_ID: ${{ secrets.IG_BUSINESS_ACCOUNT_ID }}
+        run: python publish_sunday_batch.py
