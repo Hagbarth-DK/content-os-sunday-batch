@@ -67,7 +67,7 @@ def fetch_scheduled_posts():
     body = {
         "filter": {
             "and": [
-                {"property": "Status", "status": {"equals": "Scheduled"}},
+                {"property": "Status", "select": {"equals": "Scheduled"}},
                 {"property": "Publiceringsdato", "date": {"on_or_before": datetime.now(timezone.utc).date().isoformat()}},
             ]
         }
@@ -166,7 +166,7 @@ def mark_published(page_id):
     today = datetime.now(timezone.utc).date().isoformat()
     body = {
         "properties": {
-            "Status": {"status": {"name": "Published"}},
+            "Status": {"select": {"name": "Published"}},
             "Publiceringsdato": {"date": {"start": today}},
         }
     }
