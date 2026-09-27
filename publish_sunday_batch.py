@@ -124,6 +124,7 @@ def create_media_container(video_url, caption):
         f"?media_type=REELS"
         f"&video_url={urllib.parse.quote(video_url, safe='')}"
         f"&caption={urllib.parse.quote(caption, safe='')}"
+        f"&is_ai_generated=true"
         f"&access_token={IG_ACCESS_TOKEN}"
     )
     status, data = http("POST", url)
