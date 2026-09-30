@@ -1,1 +1,1 @@
-2026-09-27T00:00:00Z — kør sondagsbatch nu (Fre 2/10 Systemet og tilkoblingen, rettet efter fejl)
+2026-09-30T18:31:05Z — kør søndagsbatch nu (Tir 29/9 Selvsvigt + Ons 30/9 Bundniveauet)
