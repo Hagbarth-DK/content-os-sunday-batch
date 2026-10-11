@@ -1,9 +1,10 @@
-name: Søndagsbatch — Instagram publicering
+name: Daglig Instagram-publicering
 
 on:
   schedule:
-    # Kører hver søndag kl. 09:00 UTC (11:00 dansk sommertid / 10:00 vintertid)
-    - cron: "0 9 * * 0"
+    # Kører hver dag kl. 09:00 UTC (11:00 dansk sommertid / 10:00 vintertid),
+    # så hvert opslag udkommer på sin egen Publiceringsdato — ikke samlet om søndagen.
+    - cron: "0 9 * * *"
   workflow_dispatch: {}  # tillader manuel kørsel fra Actions-fanen til test
   push:
     # Giver Claude en vej til at aktivere en kørsel med det samme uden Actions-API-
