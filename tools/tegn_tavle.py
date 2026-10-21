@@ -113,18 +113,19 @@ def overlay(im, tekst, stor=False):
     ord_ = tekst.split()
     linjer, linje = [], []
     for o in ord_:
-        if font.getlength(" ".join(x.strip("*") for x in linje + [o])) > W - 90 and linje:
+        if font.getlength(" ".join(x.replace("*", "") for x in linje + [o])) > W - 90 and linje:
             linjer.append(linje); linje = []
         linje.append(o)
     linjer.append(linje)
     lh = font.size + 10
     y = int(H * (0.42 if stor else 0.70)) - lh * len(linjer) // 2
     for l in linjer:
-        bredde = font.getlength(" ".join(x.strip("*") for x in l)) + 10 * (len(l) - 1)
+        bredde = font.getlength(" ".join(x.replace("*", "") for x in l)) + 10 * (len(l) - 1)
         x = (W - bredde) / 2
         for o in l:
-            farve = GUL if o.startswith("*") else (255, 255, 255)
-            ren = o.strip("*")
+            kerne = o.strip("„“\"”«»")  # kørsel 8: anførselstegn må ikke skjule accenten
+            farve = GUL if kerne.startswith("*") else (255, 255, 255)
+            ren = o.replace("*", "")
             d.text((x, y), ren, font=font, fill=farve, stroke_width=5, stroke_fill=(0, 0, 0))
             x += font.getlength(ren) + font.getlength(" ") + 10
         y += lh

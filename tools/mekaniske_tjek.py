@@ -109,7 +109,7 @@ def tjek_k5(p, tale, sk, foerste, dele, linjer):
     if hv == "Observation":
         ok = bool(re.search(r"\b(du|dig|din|dit)\b", f1)) and not re.search(r"\bjeg\b", f1); why = "Observation kræver du-form i første sætning"
     elif hv == "Sætningen de selv siger":
-        ok = bool(re.search(r"\b(jeg|min|mit|mig|siger du)\b", (sk + " " + foerste).lower())); why = "kræver seerens egen sætning (jeg-form)"
+        ok = bool(re.search(r"\b(jeg|min|mit|mig|vi)\b", sk.lower())); why = "kræver seerens egen jeg-sætning i skærmteksten (kørsel 8)"
     elif hv == "Regnestykke":
         to = " ".join(saet[:2]).lower()
         ok = bool(re.search(r"\d|\b(to|tre|fire|fem|seks|syv|otte|ti|tyve|femten|halvdelen)\b", to)); why = "kræver et tal i de to første sætninger"
@@ -130,7 +130,9 @@ def tjek_k5(p, tale, sk, foerste, dele, linjer):
 # Kørsel 6: gatekeeperen dømte efter kriterier, skribenten ikke tjekkede. Det, der kan
 # måles, måles nu her; resten står i skribentens selvtjek (SOP trin 2b).
 FYLD = r"det har du vidst længe|det, der virker, er|det er det hele|sådan er det bare|det ved du godt"
-LED4 = ["også når konsulenten er kørt hjem", "selv stået præcis dér"]
+# Kørsel 8: delstrenge var ikke nok; skribenten omskrev rammen om dem. Hele sætningerne ordret.
+LED4 = ["30 år med at få systemer til at holde i virksomheder, også når konsulenten er kørt hjem.",
+        "Jeg har selv stået præcis dér: travl og leverende på jobbet, med resten sat på pause."]
 
 
 def tjek_k6(p, tale, emne, dele, saet):
@@ -182,7 +184,7 @@ def tjek_k7(p, tale):
     greb = " ".join(b[2] for b in beats if b[1] == "Handling").lower()
     if greb:
         dag = UGEDAGE[datetime.date.fromisoformat(p["dato"]).weekday()]
-        andre = [d for d in UGEDAGE if d != dag and re.search(rf"\b(på )?{d}\b", greb)]
+        andre = [d for d in UGEDAGE if re.search(rf"\b{d}\b", greb)]  # kørsel 8: ingen ugedag overhovedet
         res.append(("Grebet kan udføres i dag (i dag/i aften/nu, ingen anden ugedag)",
                     bool(re.search(I_DAG, greb)) and not andre, ", ".join(andre)))
     i = re.search(INTERNT, tale.lower())
@@ -198,13 +200,47 @@ def tjek_k7(p, tale):
                 bool(re.search(r"\(idébank\)|Den røde tråd led \d", kilde)), kilde[:60]))
     jr = p.get("selvtjek", {}).get("jobregel_greb", "")
     res.append(("Selvtjek: jobreglen og grebet peger samme vej (skrevet ud)", "→" in jr, jr[:60]))
+    res += tjek_k8(p)
     brugt = [k for k in SPAERRET_KLIP if k in " ".join(b[3] for b in beats)]
     res.append(("Ingen spærrede klip", not brugt, ", ".join(brugt)))
     return res
 
 
+# Kørsel 8: skribenten optimerede mod tjekkene (Goodhart): opfandt et tal til Regnestykke
+# og udvandede idébankens greb. Tal og greb skal nu kunne spores til kilden.
+TAL = r"\b(\d+|to|tre|fire|fem|seks|syv|otte|ni|ti|tyve|tredive|fyrre|halvtreds|hundrede|femten|halvdelen)\b"
+
+
+def tjek_k8(p):
+    res = []
+    beats = p.get("beats", [])
+    kilde = (p.get("noter", "") + " " + p.get("kilde_citat", "") + " " + " ".join(LED4)).lower()
+    paastand = " ".join(b[2] for b in beats if b[1] in ("Genkendelse", "Indsats", "Forståelse")).lower()
+    paastand = re.sub(r"(klokken|kl\.)( er)? (halv |kvart over |kvart i )?\w+", " ", paastand)
+    tal = [t for t in re.findall(TAL, paastand) if not re.search(rf"\b{t}\b", kilde)]
+    res.append(("Tal i påstande findes i situationen eller kilde-citatet (intet opdigtet)", not tal, ", ".join(sorted(set(tal)))))
+    kg = p.get("kilde_greb", "")
+    if kg:
+        greb = " ".join(b[2] for b in beats if b[1] == "Handling").lower()
+        ord_ = [w for w in re.findall(r"[a-zæøå]{5,}", kg.lower())]
+        hit = [w for w in ord_ if stamme(w) in greb]
+        res.append(("Grebet bærer idébankens greb (≥2 nøgleord)", len(hit) >= 2, f"fundet: {', '.join(hit)}"))
+    elif "(idébank)" in p.get("ide", "") and p["indholdstype"] in ("Konkret greb", "System-guide"):
+        res.append(("Kilde-greb citeret fra idébanken", False, "udfyld kilde_greb ordret"))
+    return res
+
+
 def uge(posts):
     res = []
+    # Kørsel 8: samme greb to gange i ugen ("læg … ved døren").
+    def tre(p):
+        t = re.findall(r"[a-zæøå]+", " ".join(b[2] for b in p.get("beats", []) if b[1] == "Handling").lower())
+        stop = {"aften", "dag", "gang", "gjort"}
+        return {f"{t[i]} {t[i + 1]}" for i in range(len(t) - 1)
+                if max(len(t[i]), len(t[i + 1])) >= 5 and not {t[i], t[i + 1]} & stop and min(len(t[i]), len(t[i + 1])) >= 3}
+    for a, b in [(a, b) for i, a in enumerate(posts) for b in posts[i + 1:]]:
+        faelles = tre(a) & tre(b)
+        res.append((f"{a['id']}/{b['id']} ikke samme greb", not faelles, ", ".join(sorted(faelles))[:60]))
     # Kørsel 7: samme greb-størrelse ("ti minutter") flere dage gør ugen ensformig.
     maal = [m for p in posts for m in set(re.findall(r"\b(\w+ minutter)\b", " ".join(b[2] for b in p.get("beats", []) if b[1] == "Handling").lower()))]
     for m in sorted(set(maal)):
