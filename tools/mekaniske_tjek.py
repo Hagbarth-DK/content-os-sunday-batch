@@ -257,6 +257,12 @@ def tjek_k9(p, tale):
 
 def uge(posts):
     res = []
+    # Kørsel 9 (gendom): samme CTA-udbytte to dage i træk.
+    def udbytte(p):
+        m = re.search(r"viser den (?:gratis test )?dig, (hvor [^.]+)", " ".join(b[2] for b in p.get("beats", []) if b[1] == "CTA"))
+        return m.group(1) if m else ""
+    for a, b in zip(posts, posts[1:]):
+        res.append((f"{a['id']}→{b['id']} ikke samme CTA-udbytte", udbytte(a) != udbytte(b), udbytte(a)))
     # Kørsel 9: mandag og onsdag var samme emne med samme skærmtekst-skabelon.
     def ordset(p):
         return {stamme(w) for w in re.findall(r"[a-zæøå]{5,}", re.sub(r"\*", "", p["skaermtekst"]).lower())} - {stamme(p.get("emne", "x"))}
