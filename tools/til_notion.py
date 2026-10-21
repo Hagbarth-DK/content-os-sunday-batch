@@ -20,7 +20,8 @@ def manus(p):
 def opslag(P, korsel):
     out = []
     for p in P:
-        noter = (f"{korsel}\n{p.get('noter', '')}\nVideoformat: {p['videoformat']} · Talking head med KLIP fra assets/broll\n"
+        noter = (f"{korsel}\n{p.get('noter', '')}\nEmne (det, der ligger stille): {p.get('emne', '')}\n"
+                 f"Kildens søjle: {p.get('idebank_soejle', '')}\nVideoformat: {p['videoformat']} · Talking head med KLIP fra assets/broll\n"
                  f"Indholdstype: {p['indholdstype']}\nHook-vinkel: {p['hook_vinkel']}\nLyd: {p['lyd']}\nStemning: {p['stemning']}")
         out.append({"properties": {
             "Titel": p["titel"], "Status": "Draft", "Format": "Talking Head", "Søjle": p["soejle"],

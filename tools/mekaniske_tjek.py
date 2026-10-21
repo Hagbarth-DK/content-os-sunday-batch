@@ -67,6 +67,62 @@ def tjek(p):
     res.append(("Billedtekst 3 linjer + disclosure", len(linjer) == 4, f"{len(linjer)} blokke"))
     emojis = len(re.findall(r"[\U0001F300-\U0001FAFF]", p["billedtekst"] + p["manuskript"]))
     res.append(("Højst én emoji", emojis <= 1, f"{emojis}"))
+    res += tjek_k5(p, tale, sk, foerste_ord, dele, linjer)
+    return res
+
+
+# Kørsel 5: reglerne fandtes, men skribenten fulgte dem ikke. Derfor felter, der tvinger
+# reglen frem, i stedet for flere regler: "emne" (den konkrete ting, der ligger stille)
+# og "idebank_soejle" (søjlen, som idébanken angiver).
+VAG_EKSTRA = r"\b(planer|planlagt|ting|tingene|det hele|alt det)\b"
+MORAL = r"resten af dit liv|det er der,|det handler om|sådan er livet|det er det, der"
+
+
+def stamme(o):
+    o = o.lower().strip(".,!?*")
+    return o[:5] if len(o) > 5 else o
+
+
+def tjek_k5(p, tale, sk, foerste, dele, linjer):
+    res = []
+    emne = p.get("emne", "").strip()
+    res.append(("Emne-felt udfyldt (den ting, der ligger stille)", bool(emne), ""))
+    if emne:
+        st = stamme(emne.split()[-1])
+        res.append(("Emneordet står i skærmteksten", st in sk.lower(), f"emne '{emne}' / skærmtekst '{sk}'"))
+        res.append(("Emneordet står i første sætning", st in foerste.lower(), foerste[:60]))
+        res.append(("Emneordet står i billedtekstens linje 1", bool(linjer) and st in linjer[0].lower(), ""))
+        res.append(("Emneordet står i situationens handling", len(dele) == 3 and st in dele[2].lower(), ""))
+    if len(dele) == 3:
+        v = re.search(VAG_EKSTRA, dele[2].lower())
+        res.append(("Handlingen er ikke 'planer'/'ting'", not v, v.group(0) if v else ""))
+    saet = [s for s in re.split(r"(?<=[.!?])\s+", tale) if s.strip()]
+    foer_cta = [s for s in saet if "START" not in s]
+    sidste = foer_cta[-1] if foer_cta else ""
+    m = re.search(MORAL, sidste.lower())
+    res.append(("Ingen moralsk afrunding før CTA", not m, sidste[:60] if m else ""))
+    n_ikke = len(re.findall(r"\bikke\b", tale.lower()))
+    res.append(("Højst to 'ikke' (ingen dobbelt ikke-X-kontrast)", n_ikke <= 2, f"{n_ikke}"))
+    # Etiketter følger indholdet (kontrolleret, ikke deklareret)
+    hv, it, f1 = p["hook_vinkel"], p["indholdstype"], foerste.lower()
+    ok, why = True, ""
+    if hv == "Observation":
+        ok = bool(re.search(r"\b(du|dig|din|dit)\b", f1)) and not re.search(r"\bjeg\b", f1); why = "Observation kræver du-form i første sætning"
+    elif hv == "Sætningen de selv siger":
+        ok = bool(re.search(r"\b(jeg|min|mit|mig|siger du)\b", (sk + " " + foerste).lower())); why = "kræver seerens egen sætning (jeg-form)"
+    elif hv == "Regnestykke":
+        to = " ".join(saet[:2]).lower()
+        ok = bool(re.search(r"\d|\b(to|tre|fire|fem|seks|syv|otte|ti|tyve|femten|halvdelen)\b", to)); why = "kræver et tal i de to første sætninger"
+    elif hv == "Billede":
+        ok = bool(re.search(r"huset|speedbåd|vandstand", tale.lower())); why = "Billede = kun huset, speedbåden, vandstanden"
+    elif hv == "Modsigelse":
+        ok = bool(re.search(r"\b(men|hjælper ikke|tværtimod|sjældent)\b", " ".join(saet[:3]).lower())); why = "kræver en modsigelse i de tre første sætninger"
+    res.append((f"Hook-vinkel '{hv}' passer til indholdet", ok, "" if ok else why))
+    if it == "Historie":
+        res.append(("Historie: hook er ikke Observation", hv != "Observation", hv))
+        res.append(("Historie: billedtekst linje 1 er emnet, ikke 'Jeg …'", bool(linjer) and not linjer[0].strip().startswith("Jeg"), linjer[0][:50] if linjer else ""))
+    ib = p.get("idebank_soejle", "")
+    res.append(("Søjle = idébankens søjle", bool(ib) and ib[:1] == p["soejle"][:1], f"{p['soejle']} / idébank {ib or 'mangler'}"))
     return res
 
 def uge(posts):
