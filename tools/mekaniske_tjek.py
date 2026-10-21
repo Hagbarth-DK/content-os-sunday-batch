@@ -33,7 +33,7 @@ def tjek(p):
     skn = len(ord(sk))
     res.append(("Skærmtekst 2–5 ord", 2 <= skn <= 5, f"{skn} ord"))
     res.append(("Ét accentord", p["skaermtekst"].count("*") == 2, p["skaermtekst"]))
-    res.append(("Skærmtekst = første talte ord", tale.lower().startswith(sk.lower()), f"tale starter: '{tale[:40]}'"))
+    res.append(("Skærmtekst = første talte ord", re.sub(r"^[\"“”„«»\s]+", "", tale).lower().startswith(sk.lower()), f"tale starter: '{tale[:40]}'"))
     # Situation først (Scripting Framework, tilføjet 21/10-2026 efter SOP-kørsel 2)
     sit = re.search(r"Situation:\s*\S", p.get("noter", "") + " " + p.get("situation", ""))
     res.append(("Situation-linje skrevet før manuskript", bool(sit), "mangler 'Situation: sted · tid · handling'" if not sit else ""))
@@ -257,6 +257,12 @@ def tjek_k9(p, tale):
 
 def uge(posts):
     res = []
+    # Kørsel 10: alle fire skærmtekster havde samme form ("*Ting* + tilstand"). Formen skal skifte dag til dag.
+    def form(p):
+        sk = p["skaermtekst"].strip()
+        return (sk.lstrip("„\"“").startswith("*"), sk.endswith("?"), bool(re.search(r"[„“\"]", sk)))
+    for a, b in zip(posts, posts[1:]):
+        res.append((f"{a['id']}→{b['id']} skærmteksten skifter form (accent først / spørgsmål / citat)", form(a) != form(b), str(form(a))))
     # Kørsel 9 (gendom): samme CTA-udbytte to dage i træk.
     def udbytte(p):
         m = re.search(r"viser den (?:gratis test )?dig, (hvor [^.]+)", " ".join(b[2] for b in p.get("beats", []) if b[1] == "CTA"))
