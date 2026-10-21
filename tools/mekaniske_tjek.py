@@ -216,7 +216,7 @@ def tjek_k8(p):
     res = []
     beats = p.get("beats", [])
     kilde = (p.get("noter", "") + " " + p.get("kilde_citat", "") + " " + " ".join(LED4)).lower()
-    paastand = " ".join(b[2] for b in beats if b[1] in ("Genkendelse", "Indsats", "Forståelse")).lower()
+    paastand = " ".join(b[2] for b in beats if b[1] in ("Genkendelse", "Indsats", "Forståelse", "Udbytte")).lower()  # kørsel 11: "fem minutter" i Udbytte
     paastand = re.sub(r"(klokken|kl\.)( er)? (halv |kvart over |kvart i )?\w+", " ", paastand)
     tal = [t for t in re.findall(TAL, paastand) if not re.search(rf"\b{t}\b", kilde)]
     res.append(("Tal i påstande findes i situationen eller kilde-citatet (intet opdigtet)", not tal, ", ".join(sorted(set(tal)))))
@@ -303,12 +303,25 @@ def uge(posts):
         res.append((f"{a['id']}→{b['id']} ikke samme hook-vinkel", a["hook_vinkel"] != b["hook_vinkel"], ""))
     return res
 
+# Efter kørsel 11 (alle 🔴 på sprog): tjek, der tvinger ordret tekst ind i talen, er advarsler,
+# ikke stop. Sproget går forud for formen (Hagbarths dansk — sprogreference).
+ADVARSEL = ("Problemordet", "Emneordet står i første sætning", "Emneordet står i billedtekstens linje 1",
+            "Emneordet står i situationens handling", "Grebet bærer idébankens greb", "Bevis = Den røde tråd led 4",
+            "Situationens sted står i teksten", "Hook-vinkel")
+
+
+def mark(navn, ok):
+    if ok:
+        return "✅"
+    return "⚠️" if navn.startswith(ADVARSEL) else "❌"
+
+
 if __name__ == "__main__":
     posts = json.load(open(sys.argv[1], encoding="utf-8"))
     for p in posts:
         print(f"\n== {p['id']} {p['titel']} (format {p['videoformat']})")
         for navn, ok, info in tjek(p):
-            print(f"  {'✅' if ok else '❌'} {navn} {('— ' + info) if info else ''}")
+            print(f"  {mark(navn, ok)} {navn} {('— ' + info) if info else ''}")
     print("\n== Ugen / variation")
     for navn, ok, info in uge(posts):
         print(f"  {'✅' if ok else '❌'} {navn} {('— ' + info) if info else ''}")
