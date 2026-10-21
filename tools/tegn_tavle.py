@@ -12,14 +12,19 @@ opslag.json: liste af opslag med felterne id, dag, titel, videoformat, soejle,
 tragt, indholdstype, skaermtekst, billedtekst, lyd, stemning og beats.
 Hvert beat: [type, trin, talt tekst, billedbeskrivelse]. Type AV, KLIP, SIT, GRAF.
 KLIP-beats skal nævne en fil i assets/broll (fx "cafe.mp4: …"); der tages et
-billede midt i klippet. AV-beats bruger et udsnit af Twin-stillbilledet
-(AV_KILDE nedenfor) — en skitse, ikke det endelige look.
+billede midt i klippet. AV-beats viser den AKTIVE Twin (den, produktionen
+bruger, jf. Projektstatus/Produktions-tjekliste) — ikke en Twin under udvikling.
+Lige nu Twin 1.0 (Hagbarth 21/10-2026: Twin 1.0's visuelle bruges, indtil
+Twin 2.0 er færdig og godkendt). Skift kilde med miljøvariablen AV_KILDE
+(et .mp4 eller et stillbillede), fx når Twin 2.0 aktiveres.
 """
 import json, os, re, subprocess, sys
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-AV_KILDE = os.path.join(ROOT, "storyboard/uge1/dag6_beat03.jpg")
+# Aktiv Twin: 1.0 (seneste publicerede talking head). Undertekster sidder nederst og skæres fra.
+AV_KILDE = os.environ.get("AV_KILDE", os.path.join(ROOT, "media/2026-10-07_planingsprisen.mp4"))
+AV_TIDER = [9.5, 16.0, 28.5, 22.0, 34.0]
 FONT = "/usr/share/fonts/opentype/inter/Inter-Bold.otf"
 FONT_SB = "/usr/share/fonts/opentype/inter/Inter-SemiBold.otf"
 FONT_R = "/usr/share/fonts/opentype/inter/Inter-Regular.otf"
@@ -38,9 +43,24 @@ def f(path, size):
 
 
 def av_billede(variant):
-    """Udsnit uden tekst fra Twin-stillbilledet (øverste del), varieret pr. beat."""
-    im = Image.open(AV_KILDE).convert("RGB")
-    top = 760  # under ansigt/bryst, over den indbrændte tekst
+    """Udsnit uden indbrændt tekst af den aktive Twin (øverste del), varieret pr. beat."""
+    if AV_KILDE.endswith(".mp4"):
+        ud = "/tmp/_av_frame.jpg"
+        t = AV_TIDER[variant % len(AV_TIDER)]
+        subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", str(t), "-i", AV_KILDE, "-frames:v", "1", ud], check=True)
+        im = Image.open(ud).convert("RGB")
+        # Hele bredden, skåret over underteksterne; bunden fyldes med en sløret forlængelse.
+        top = im.crop((0, 0, im.width, int(im.height * 0.70)))
+        top = top.resize((W, int(top.height * W / top.width)), Image.LANCZOS)
+        ud_im = top.crop((0, 0, W, H)).resize((W, H)) if top.height >= H else None
+        if ud_im is None:
+            bund = top.crop((0, top.height - 60, W, top.height)).resize((W, H - top.height)).filter(ImageFilter.GaussianBlur(18))
+            ud_im = Image.new("RGB", (W, H))
+            ud_im.paste(top, (0, 0)); ud_im.paste(bund, (0, top.height))
+        return ud_im
+    else:
+        im = Image.open(AV_KILDE).convert("RGB")
+        top = int(im.height * 0.66)
     ch = top - 40 * (variant % 3)
     cw = int(ch * 9 / 16)
     x0 = (im.width - cw) // 2 + (variant % 2) * 20 - 10

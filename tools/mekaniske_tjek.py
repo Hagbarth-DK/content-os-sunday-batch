@@ -43,7 +43,7 @@ def tjek(p):
     res.append(("Ét udbytte i CTA", not re.search(r"igennem, og |, og om du", tale), ""))
     alt = (tale + " " + p["billedtekst"]).lower()
     res.append(("Keyword START", KEYWORD in p["manuskript"] and KEYWORD in p["billedtekst"], ""))
-    ctas = len(re.findall(r"kommenter|følg mig|link i bio|del med|gem", alt))
+    ctas = len(re.findall(r"\bkommenter\b|følg mig|link i bio|del (den|det|opslaget) med|\bgem (den|det|opslaget)\b", alt))
     res.append(("Én CTA (ingen stablede)", ctas <= 2, f"{ctas} CTA-ord (tale+billedtekst)"))
     hit = [w for w in FORBUDT if re.search(w, alt)]
     res.append(("Forbudte ord", not hit, ", ".join(hit)))
