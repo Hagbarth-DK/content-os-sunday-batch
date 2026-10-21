@@ -29,7 +29,7 @@ def tjek(p):
     tale = talt(p["manuskript"]).strip()
     n = len(ord(tale))
     res.append(("Højst 100–120 ord", n <= 120, f"{n} ord"))
-    sk = p["skaermtekst"].replace("*", "")
+    sk = re.sub(r"[*\"“”„«»]", "", p["skaermtekst"]).strip()
     skn = len(ord(sk))
     res.append(("Skærmtekst 2–5 ord", 2 <= skn <= 5, f"{skn} ord"))
     res.append(("Ét accentord", p["skaermtekst"].count("*") == 2, p["skaermtekst"]))
@@ -123,6 +123,48 @@ def tjek_k5(p, tale, sk, foerste, dele, linjer):
         res.append(("Historie: billedtekst linje 1 er emnet, ikke 'Jeg …'", bool(linjer) and not linjer[0].strip().startswith("Jeg"), linjer[0][:50] if linjer else ""))
     ib = p.get("idebank_soejle", "")
     res.append(("Søjle = idébankens søjle", bool(ib) and ib[:1] == p["soejle"][:1], f"{p['soejle']} / idébank {ib or 'mangler'}"))
+    res += tjek_k6(p, tale, emne, dele, saet)
+    return res
+
+
+# Kørsel 6: gatekeeperen dømte efter kriterier, skribenten ikke tjekkede. Det, der kan
+# måles, måles nu her; resten står i skribentens selvtjek (SOP trin 2b).
+FYLD = r"det har du vidst længe|det, der virker, er|det er det hele|sådan er det bare|det ved du godt"
+LED4 = ["også når konsulenten er kørt hjem", "selv stået præcis dér"]
+
+
+def tjek_k6(p, tale, emne, dele, saet):
+    res = []
+    acc = re.findall(r"\*([^*]+)\*", p["skaermtekst"])
+    if emne:
+        res.append(("Accentordet er emneordet", bool(acc) and stamme(emne.split()[-1]) in acc[0].lower(), f"accent '{acc[0] if acc else ''}' / emne '{emne}'"))
+    if len(dele) == 3:
+        sted = stamme(dele[0].split()[-1])
+        res.append(("Situationens sted står i teksten", sted in tale.lower(), f"sted '{dele[0]}'"))
+    res.append(("Jobbet vs. resten af livet er med ('jobbet')", "jobbet" in tale.lower() or "arbejdet" in tale.lower(), ""))
+    f = re.search(FYLD, tale.lower())
+    res.append(("Ingen fyldsætninger", not f, f.group(0) if f else ""))
+    if p["hook_vinkel"] == "Sætningen de selv siger":
+        res.append(("Seerens egen sætning står i anførselstegn i skærmteksten", bool(re.search(r"[\"“„«]", p["skaermtekst"])), p["skaermtekst"]))
+    if p["indholdstype"] == "Tilbud" or "30 år" in tale:
+        n = len(re.findall(r"\btest\w*|\bviser\b", tale.lower())) - 1
+        res.append(("Testens udbytte loves kun én gang (i CTA)", n <= 1, f"{n} løfter"))
+        res.append(("Bevis = Den røde tråd led 4 ordret", all(s in tale for s in LED4), "brug led 4's ordlyd"))
+    # Problemordet: situationen og jobsammenligningen skal handle om det samme problem.
+    prob = p.get("problem", "").strip().lower()
+    beats = p.get("beats", [])
+    job = [b[2].lower() for b in beats if "jobbet" in b[2].lower() or "arbejdet" in b[2].lower()]
+    if prob:
+        ps = stamme(prob)
+        ok = bool(beats) and ps in beats[0][2].lower() and any(ps in j for j in job)
+        res.append(("Problemordet står i genkendelsen OG i jobsammenligningen", ok, f"problem '{prob}'"))
+    else:
+        res.append(("Problem-felt udfyldt (ét ord: hvorfor ligger det stille?)", False, ""))
+    st = p.get("selvtjek", {})
+    res.append(("Skribentens selvtjek udfyldt (AI-markører ≤1, send-til)",
+                isinstance(st, dict) and st.get("ai_markoerer", 9) <= 1 and bool(st.get("send_til")), str(st)))
+    klip_trin = [b[1] for b in p.get("beats", []) if b[0] == "KLIP"]
+    res.append(("KLIP kun i Forståelse (klippene viser Twin, ikke seerens situation)", all(t == "Forståelse" for t in klip_trin), ", ".join(klip_trin)))
     return res
 
 def uge(posts):
