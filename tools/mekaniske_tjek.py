@@ -201,6 +201,7 @@ def tjek_k7(p, tale):
     jr = p.get("selvtjek", {}).get("jobregel_greb", "")
     res.append(("Selvtjek: jobreglen og grebet peger samme vej (skrevet ud)", "→" in jr, jr[:60]))
     res += tjek_k8(p)
+    res += tjek_k9(p, tale)
     brugt = [k for k in SPAERRET_KLIP if k in " ".join(b[3] for b in beats)]
     res.append(("Ingen spærrede klip", not brugt, ", ".join(brugt)))
     return res
@@ -230,8 +231,40 @@ def tjek_k8(p):
     return res
 
 
+# Kørsel 9: publiceringsdatoen blev ignoreret to gange, og passiv form var den eneste AI-markør.
+MAANEDER = ["januar", "februar", "marts", "april", "maj", "juni", "juli", "august", "september", "oktober", "november", "december"]
+UGE_RELATIV = r"før den nye uge|i weekenden|næste uge|på mandag|i morgen tidlig"
+PASSIV = r"\b(bliver|blev) \w+(et|t|s)\b|\b\w+es\b(?= af)"
+
+
+def tjek_k9(p, tale):
+    import datetime
+    res = []
+    d = datetime.date.fromisoformat(p["dato"])
+    dl = p.get("dato_laesning", "")
+    res.append(("Læst med publiceringsdatoen (dato_laesning nævner måneden)", MAANEDER[d.month - 1] in dl.lower(), dl[:60]))
+    slut = " ".join(b[2] for b in p.get("beats", []) if b[1] in ("Handling", "Udbytte")).lower()
+    r = re.search(UGE_RELATIV, slut)
+    res.append(("Greb/udbytte uden uge-relative tider (de afhænger af ugedagen)", not r, r.group(0) if r else ""))
+    tekst = (tale + " " + p["billedtekst"]).lower()
+    for kg in re.split(r"(?<=[?.!])\s+", p.get("kilde_greb", "").lower()):
+        if kg.strip():
+            tekst = tekst.replace(kg.strip(), " ")  # ordret kilde tæller ikke som skribentens passiv
+    n = len(re.findall(PASSIV, tekst))
+    res.append(("Højst én passiv konstruktion (bliver/blev …et)", n <= 1, f"{n}"))
+    return res
+
+
 def uge(posts):
     res = []
+    # Kørsel 9: mandag og onsdag var samme emne med samme skærmtekst-skabelon.
+    def ordset(p):
+        return {stamme(w) for w in re.findall(r"[a-zæøå]{5,}", re.sub(r"\*", "", p["skaermtekst"]).lower())} - {stamme(p.get("emne", "x"))}
+    for a, b in [(a, b) for i, a in enumerate(posts) for b in posts[i + 1:]]:
+        ea, eb = a.get("emne", "#"), b.get("emne", "#")
+        res.append((f"{a['id']}/{b['id']} ikke samme emne", not (ea in eb or eb in ea), f"{ea} / {eb}"))
+        f = ordset(a) & ordset(b)
+        res.append((f"{a['id']}/{b['id']} ikke samme skærmtekst-skabelon", not f, ", ".join(f)))
     # Kørsel 8: samme greb to gange i ugen ("læg … ved døren").
     def tre(p):
         t = re.findall(r"[a-zæøå]+", " ".join(b[2] for b in p.get("beats", []) if b[1] == "Handling").lower())
