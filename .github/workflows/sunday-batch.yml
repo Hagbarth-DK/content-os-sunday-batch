@@ -12,6 +12,10 @@ on:
     paths:
       - "trigger/run.txt"
 
+permissions:
+  contents: write   # keepalive-commit
+  issues: write     # alarm-issue (sender mail til ejeren)
+
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -31,3 +35,62 @@ jobs:
           IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
           IG_BUSINESS_ACCOUNT_ID: ${{ secrets.IG_BUSINESS_ACCOUNT_ID }}
         run: python publish_sunday_batch.py
+
+      # ---------- Alarm ----------
+      # Fejler kørslen (et opslag blev ikke publiceret, eller scriptet crashede,
+      # fx udløbet token), oprettes et issue med label "alarm" og @-mention af
+      # ejeren. GitHub sender det som mail. Findes der allerede et åbent
+      # alarm-issue, tilføjes en kommentar i stedet, så der ikke kommer dubletter.
+      - name: Alarm ved fejl
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          OWNER: ${{ github.repository_owner }}
+        run: |
+          gh label create alarm --color B60205 --description "Publicering fejlet" 2>/dev/null || true
+          if [ -f alarm.md ]; then DETAILS="$(cat alarm.md)"; else DETAILS="Scriptet stoppede, før det nåede at publicere (fx Notion- eller Instagram-token, netværk). Se loggen."; fi
+          BODY="$(printf '@%s\n\n%s\n\nLog: %s' "$OWNER" "$DETAILS" "$RUN_URL")"
+          OPEN="$(gh issue list --label alarm --state open --json number --jq '.[0].number')"
+          if [ -n "$OPEN" ]; then
+            gh issue comment "$OPEN" --body "$BODY"
+          else
+            gh issue create --title "🔴 Instagram-publicering fejlet $(date -u +%F)" --label alarm --body "$BODY"
+          fi
+
+      # Lykkes en kørsel igen, lukkes åbne alarm-issues automatisk.
+      - name: Luk alarm når det virker igen
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for n in $(gh issue list --label alarm --state open --json number --jq '.[].number'); do
+            gh issue close "$n" --comment "✅ Løst: publiceringen kørte uden fejl $(date -u +%F)."
+          done
+
+  # ---------- Keepalive ----------
+  # GitHub slår planlagte workflows fra efter 60 dage uden aktivitet i repoet.
+  # Er seneste commit ældre end 45 dage, laves et lille heartbeat-commit,
+  # så den daglige publicering aldrig stopper i stilhed.
+  keepalive:
+    if: github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Heartbeat hvis repoet har været stille i 45 dage
+        run: |
+          LAST=$(git log -1 --format=%ct)
+          NOW=$(date +%s)
+          DAYS=$(( (NOW - LAST) / 86400 ))
+          echo "Dage siden seneste commit: $DAYS"
+          if [ "$DAYS" -ge 45 ]; then
+            mkdir -p trigger
+            date -u +%FT%TZ > trigger/heartbeat.txt
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add trigger/heartbeat.txt
+            git commit -m "Keepalive: holder den daglige publicering aktiv"
+            git push
+          fi

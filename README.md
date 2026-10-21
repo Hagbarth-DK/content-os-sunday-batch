@@ -70,3 +70,13 @@ endnu ikke testet i praksis (se "Åbne punkter" i Notion-credentials-siden).
 Første fulde end-to-end-kørsel lykkedes 2026-09-25 (run #5): posten
 "04 — Fire ting der stopper din fremdrift" blev publiceret til Instagram og
 Notion-status opdateret til "Published" — helt uden manuelle klik.
+
+## Alarm og keepalive (tilføjet 21/10-2026)
+- **Alarm:** Hvis et opslag, der skulle udkomme, ikke bliver publiceret (fejl, manglende
+  felter eller fx udløbet token), opretter workflowet et issue med label `alarm` og
+  @-mention af ejeren. GitHub sender det som mail. Der kommer kun ét åbent alarm-issue
+  ad gangen (nye fejl lægges som kommentar), og det lukkes automatisk, når en kørsel
+  lykkes igen.
+- **Keepalive:** GitHub slår planlagte workflows fra efter 60 dage uden aktivitet. Er
+  seneste commit ældre end 45 dage, laver workflowet et lille heartbeat-commit i
+  `trigger/heartbeat.txt`, så den daglige publicering ikke stopper i stilhed.

@@ -219,8 +219,27 @@ def main():
     for t, reason in failed:
         print(f"  - {t}: {reason}")
 
-    if failed:
+    # Alarm: et opslag, der skulle udkomme, men ikke gjorde (fejlet ELLER sprunget
+    # over pga. manglende felter), maa aldrig forsvinde stille. Workflowet laeser
+    # alarm.md og opretter et GitHub-issue, som sender mail til ejeren.
+    if failed or skipped:
+        write_alarm(failed, skipped)
         sys.exit(1)
+
+
+def write_alarm(failed, skipped):
+    lines = ["Et eller flere opslag, der skulle udkomme i dag, er IKKE publiceret.", ""]
+    if failed:
+        lines.append("**Fejlet:**")
+        lines += [f"- {t}: {reason}" for t, reason in failed]
+        lines.append("")
+    if skipped:
+        lines.append("**Sprunget over (mangler felter i Notion):**")
+        lines += [f"- {t}: {reason}" for t, reason in skipped]
+        lines.append("")
+    lines.append("Opslagene står stadig som Scheduled og forsøges igen ved næste daglige kørsel.")
+    with open("alarm.md", "w", encoding="utf-8") as f:
+        f.write("\n".join(lines) + "\n")
 
 
 if __name__ == "__main__":
