@@ -6,7 +6,8 @@ import json, re, sys
 FORBUDT = [r"diagnos\w*", r"\bvaner?\w*", r"\bbasic\b", r"t-kryds\w*", r"\breview\b", r"check-in",
            r"\bmatch\b", r"to-do", r"selvindsigt", r"selvforståelse", r"\btændt\b", r"selvtilfredshed"]
 FOERSTE_KONTAKT = [r"bundniveau\w*", r"dårlige? dag\w*"]
-PRIS_KURSUS = [r"\bkr\.?\b", r"4\.?995", r"bliv ceo"]
+ABSTRAKT = [r"\bsystem\w*", r"\bintention\w*", r"\bproces\w*", r"\bbeslut\w*", r"\bprincip\w*"]
+PRIS_KURSUS =[r"\bkr\.?\b", r"4\.?995", r"bliv ceo"]
 DISCLOSURE = "🤖 Skabt med AI (avatar, stemme og video)."
 KEYWORD = "START"
 
@@ -33,6 +34,13 @@ def tjek(p):
     res.append(("Skærmtekst 2–5 ord", 2 <= skn <= 5, f"{skn} ord"))
     res.append(("Ét accentord", p["skaermtekst"].count("*") == 2, p["skaermtekst"]))
     res.append(("Skærmtekst = første talte ord", tale.lower().startswith(sk.lower()), f"tale starter: '{tale[:40]}'"))
+    # Situation først (Scripting Framework, tilføjet 21/10-2026 efter SOP-kørsel 2)
+    sit = re.search(r"Situation:\s*\S", p.get("noter", "") + " " + p.get("situation", ""))
+    res.append(("Situation-linje skrevet før manuskript", bool(sit), "mangler 'Situation: sted · tid · handling'" if not sit else ""))
+    foerste = re.split(r"(?<=[.!?])\s", tale, maxsplit=1)[0].lower() + " " + sk.lower()
+    hit = [w for w in ABSTRAKT if re.search(w, foerste)]
+    res.append(("Ingen abstrakte ord i skærmtekst/første sætning", not hit, ", ".join(hit)))
+    res.append(("Ét udbytte i CTA", not re.search(r"igennem, og |, og om du", tale), ""))
     alt = (tale + " " + p["billedtekst"]).lower()
     res.append(("Keyword START", KEYWORD in p["manuskript"] and KEYWORD in p["billedtekst"], ""))
     ctas = len(re.findall(r"kommenter|følg mig|link i bio|del med|gem", alt))
