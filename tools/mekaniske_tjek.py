@@ -163,12 +163,52 @@ def tjek_k6(p, tale, emne, dele, saet):
     st = p.get("selvtjek", {})
     res.append(("Skribentens selvtjek udfyldt (AI-markører ≤1, send-til)",
                 isinstance(st, dict) and st.get("ai_markoerer", 9) <= 1 and bool(st.get("send_til")), str(st)))
+    res += tjek_k7(p, tale)
     klip_trin = [b[1] for b in p.get("beats", []) if b[0] == "KLIP"]
     res.append(("KLIP kun i Forståelse (klippene viser Twin, ikke seerens situation)", all(t == "Forståelse" for t in klip_trin), ", ".join(klip_trin)))
     return res
 
+# Kørsel 7: sproget sad (0 AI-markører), fejlen flyttede til logikken mellem delene.
+UGEDAGE = ["mandag", "tirsdag", "onsdag", "torsdag", "fredag", "lørdag", "søndag"]
+I_DAG = r"\bi dag\b|\bi aften\b|\bnu\b|når du kommer hjem|efter aftensmaden|i frokostpausen|inden du går"
+INTERNT = r"\bplane\b|planing|bundniveau|hullerne i osten|tilkobling|ægte intention"
+SPAERRET_KLIP = ["foredrag-scene.mp4"]  # viser publikum/andre mennesker (regel 27/9) og ligner en guru-annonce
+
+
+def tjek_k7(p, tale):
+    res = []
+    import datetime
+    beats = p.get("beats", [])
+    greb = " ".join(b[2] for b in beats if b[1] == "Handling").lower()
+    if greb:
+        dag = UGEDAGE[datetime.date.fromisoformat(p["dato"]).weekday()]
+        andre = [d for d in UGEDAGE if d != dag and re.search(rf"\b(på )?{d}\b", greb)]
+        res.append(("Grebet kan udføres i dag (i dag/i aften/nu, ingen anden ugedag)",
+                    bool(re.search(I_DAG, greb)) and not andre, ", ".join(andre)))
+    i = re.search(INTERNT, tale.lower())
+    res.append(("Ingen interne begreber (fx 'op at plane')", not i, i.group(0) if i else ""))
+    if p["indholdstype"] == "System-guide":
+        dele = p.get("dele", [])
+        ok = 2 <= len(dele) <= 3 and all(stamme(d.split()[0]) in tale.lower() for d in dele)
+        res.append(("System-guide har 2–3 dele, der står i teksten", ok, str(dele)))
+    if p["tragt"] in ("Activate", "Ascend"):
+        res.append(("Activate/Ascend har trinnet Indsats (hvad de allerede prøver)", any(b[1] == "Indsats" for b in beats), ""))
+    kilde = p.get("ide", "")
+    res.append(("Kilde kan efterprøves (idébank-titel eller Den røde tråd led N)",
+                bool(re.search(r"\(idébank\)|Den røde tråd led \d", kilde)), kilde[:60]))
+    jr = p.get("selvtjek", {}).get("jobregel_greb", "")
+    res.append(("Selvtjek: jobreglen og grebet peger samme vej (skrevet ud)", "→" in jr, jr[:60]))
+    brugt = [k for k in SPAERRET_KLIP if k in " ".join(b[3] for b in beats)]
+    res.append(("Ingen spærrede klip", not brugt, ", ".join(brugt)))
+    return res
+
+
 def uge(posts):
     res = []
+    # Kørsel 7: samme greb-størrelse ("ti minutter") flere dage gør ugen ensformig.
+    maal = [m for p in posts for m in set(re.findall(r"\b(\w+ minutter)\b", " ".join(b[2] for b in p.get("beats", []) if b[1] == "Handling").lower()))]
+    for m in sorted(set(maal)):
+        res.append((f"Grebets størrelse '{m}' højst én gang i ugen", maal.count(m) <= 1, f"{maal.count(m)} gange"))
     # Kørsel 4: samme klip i alle opslag. Maks. 2 gange pr. uge og aldrig to dage i træk.
     klip = [set(re.findall(r"([\w\-]+\.mp4)", " ".join(b[3] for b in p.get("beats", [])))) for p in posts]
     alle = [k for s in klip for k in s]
