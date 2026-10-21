@@ -43,6 +43,9 @@ def tjek(p):
     vag = bool(dele) and len(dele) == 3 and re.search(r"\b(intet|ingenting|noget)\b", dele[2].lower())
     res.append(("Situation har sted · tid · konkret handling", len(dele) == 3 and not vag,
                 f"{len(dele)} dele" + (", handlingen er vag" if vag else "")))
+    foerste_ord = re.split(r"(?<=[.!?])\s", tale, maxsplit=1)[0]
+    res.append(("Spørgsmål i hook = spørgsmålstegn i skærmtekst",
+                not foerste_ord.strip().endswith("?") or p["skaermtekst"].strip().endswith("?"), ""))
     tretal = re.findall(r"\b\w+, \w+ og \w+\b", tale)
     res.append(("Ingen tretals-opremsning som pynt", not tretal, ", ".join(tretal)))
     foerste = re.split(r"(?<=[.!?])\s", tale, maxsplit=1)[0].lower() + " " + sk.lower()
@@ -68,6 +71,13 @@ def tjek(p):
 
 def uge(posts):
     res = []
+    # Kørsel 4: samme klip i alle opslag. Maks. 2 gange pr. uge og aldrig to dage i træk.
+    klip = [set(re.findall(r"([\w\-]+\.mp4)", " ".join(b[3] for b in p.get("beats", [])))) for p in posts]
+    alle = [k for s in klip for k in s]
+    for k in sorted(set(alle)):
+        res.append((f"Klip {k} højst 2 gange i ugen", alle.count(k) <= 2, f"{alle.count(k)} gange"))
+    for a, b, ka, kb in zip(posts, posts[1:], klip, klip[1:]):
+        res.append((f"{a['id']}→{b['id']} ikke samme klip", not (ka & kb), ", ".join(ka & kb)))
     for a, b in zip(posts, posts[1:]):
         res.append((f"{a['id']}→{b['id']} ikke samme indholdstype", a["indholdstype"] != b["indholdstype"],
                     f"{a['indholdstype']} / {b['indholdstype']}"))
