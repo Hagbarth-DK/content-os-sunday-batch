@@ -37,6 +37,14 @@ def tjek(p):
     # Situation først (Scripting Framework, tilføjet 21/10-2026 efter SOP-kørsel 2)
     sit = re.search(r"Situation:\s*\S", p.get("noter", "") + " " + p.get("situation", ""))
     res.append(("Situation-linje skrevet før manuskript", bool(sit), "mangler 'Situation: sted · tid · handling'" if not sit else ""))
+    # Kørsel 3: situationen skal have tre dele, og handlingen skal være konkret (ikke "intet"/"noget")
+    m = re.search(r"Situation:\s*(.+)", p.get("noter", ""))
+    dele = [d.strip() for d in m.group(1).split("·")] if m else []
+    vag = bool(dele) and len(dele) == 3 and re.search(r"\b(intet|ingenting|noget)\b", dele[2].lower())
+    res.append(("Situation har sted · tid · konkret handling", len(dele) == 3 and not vag,
+                f"{len(dele)} dele" + (", handlingen er vag" if vag else "")))
+    tretal = re.findall(r"\b\w+, \w+ og \w+\b", tale)
+    res.append(("Ingen tretals-opremsning som pynt", not tretal, ", ".join(tretal)))
     foerste = re.split(r"(?<=[.!?])\s", tale, maxsplit=1)[0].lower() + " " + sk.lower()
     hit = [w for w in ABSTRAKT if re.search(w, foerste)]
     res.append(("Ingen abstrakte ord i skærmtekst/første sætning", not hit, ", ".join(hit)))
