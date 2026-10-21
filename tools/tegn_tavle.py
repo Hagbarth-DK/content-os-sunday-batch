@@ -170,7 +170,7 @@ def tavle(p, beat_billeder):
     d.text((mx, 64), p["dag"], font=f(FONT_SB, 22), fill=GRA)
     d.text((mx, 100), p["titel"].split("— ")[-1], font=f(FONT, 56), fill=NAVY)
     x = mx
-    for chip in [f"Format {p['videoformat']} · Talking head + klip", p["soejle"], f"{p['tragt']} · {p['indholdstype']}", "Skitse · 0 credits"]:
+    for chip in [f"Format {p['videoformat']} · Talking head" + (" + klip" if any(b[0] == "KLIP" for b in p["beats"]) else ""), p["soejle"], f"{p['tragt']} · {p['indholdstype']}", "Skitse · 0 credits"]:
         cw = f(FONT_SB, 22).getlength(chip) + 40
         d.rounded_rectangle((x, 182, x + cw, 222), 20, fill=(232, 228, 220))
         d.text((x + 20, 189), chip, font=f(FONT_SB, 22), fill=NAVY)
