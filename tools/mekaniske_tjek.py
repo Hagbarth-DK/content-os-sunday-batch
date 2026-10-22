@@ -259,6 +259,9 @@ def tjek_k9(p, tale):
             tekst = tekst.replace(kg.strip(), " ")  # ordret kilde tæller ikke som skribentens passiv
     n = len(re.findall(PASSIV, tekst))
     res.append(("Højst én passiv konstruktion (bliver/blev …et)", n <= 1, f"{n}"))
+    # Kørsel 13: "fx" i talt tekst bliver læst op som "f x" og er skriftsprog (fejltype 5).
+    fk = re.findall(r"(?<![\wæøå])(fx|f\.eks\.|bl\.a\.|evt\.|ca\.|osv\.|mht\.|dvs\.)", tale.lower())
+    res.append(("Ingen forkortelser i talt tekst (fx → for eksempel)", not fk, ", ".join(fk)))
     return res
 
 
