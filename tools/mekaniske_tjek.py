@@ -268,9 +268,13 @@ def tjek_k9(p, tale):
 def uge(posts):
     res = []
     # Kørsel 10: alle fire skærmtekster havde samme form ("*Ting* + tilstand"). Formen skal skifte dag til dag.
+    # Kørsel 14: tirsdag og onsdag åbnede begge med seerens citat, men accentens placering
+    # gjorde formen "forskellig". Formen er nu én kategori: citat > spørgsmål > konstatering.
     def form(p):
         sk = p["skaermtekst"].strip()
-        return (sk.lstrip("„\"“").startswith("*"), sk.endswith("?"), bool(re.search(r"[„“\"]", sk)))
+        if re.search(r"[„“\"]", sk):
+            return "citat"
+        return "spørgsmål" if sk.endswith("?") else "konstatering"
     for a, b in zip(posts, posts[1:]):
         res.append((f"{a['id']}→{b['id']} skærmteksten skifter form (accent først / spørgsmål / citat)", form(a) != form(b), str(form(a))))
     # Kørsel 9 (gendom): samme CTA-udbytte to dage i træk.
@@ -307,6 +311,17 @@ def uge(posts):
         res.append((f"Klip {k} højst 2 gange i ugen", alle.count(k) <= 2, f"{alle.count(k)} gange"))
     for a, b, ka, kb in zip(posts, posts[1:], klip, klip[1:]):
         res.append((f"{a['id']}→{b['id']} ikke samme klip", not (ka & kb), ", ".join(ka & kb)))
+    # Kørsel 14 (godkendt af Hagbarth 22/10): "På jobbet ville …" tre dage i træk og "i aften" i tre greb.
+    def jobstart(p):
+        for b in p.get("beats", []):
+            if re.search(r"\b(jobbet|arbejdet)\b", b[2].lower()) and b[1] != "Genkendelse":
+                return " ".join(re.findall(r"[a-zæøå]+", b[2].lower())[:3])
+        return ""
+    for a, b in zip(posts, posts[1:]):
+        ja, jb = jobstart(a), jobstart(b)
+        res.append((f"{a['id']}→{b['id']} jobsammenligningen åbner ikke med samme ord", not ja or ja != jb, ja))
+    aften = sum(1 for p in posts if re.search(r"\bi aften\b", " ".join(b[2] for b in p.get("beats", []) if b[1] == "Handling").lower()))
+    res.append(("Grebet ligger 'i aften' højst 2 gange i ugen", aften <= 2, f"{aften} gange"))
     for a, b in zip(posts, posts[1:]):
         res.append((f"{a['id']}→{b['id']} ikke samme indholdstype", a["indholdstype"] != b["indholdstype"],
                     f"{a['indholdstype']} / {b['indholdstype']}"))
