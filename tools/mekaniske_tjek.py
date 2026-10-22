@@ -320,6 +320,14 @@ def uge(posts):
     for a, b in zip(posts, posts[1:]):
         ja, jb = jobstart(a), jobstart(b)
         res.append((f"{a['id']}→{b['id']} jobsammenligningen åbner ikke med samme ord", not ja or ja != jb, ja))
+    # Kørsel 15 (Hagbarth: "Ret fejlene"): samme skelet hele ugen.
+    def foerste(p):
+        return re.split(r"(?<=[.?!])\s", (p.get("beats") or [["", "", ""]])[0][2].lstrip("„\"“"))[0]
+    ting = sum(1 for p in posts if re.match(r"^\*?[A-ZÆØÅ][\wæøå-]+ (står|ligger)\b", foerste(p)))
+    res.append(("Højst 2 åbninger pr. uge med 'en ting står/ligger et sted'", ting <= 2, f"{ting} gange"))
+    find = sum(1 for p in posts if (lambda h: re.search(r"\bfind (det|ud af)\b", h) and re.search(r"\bmåske\b", h))(
+        " ".join(b[2] for b in p.get("beats", []) if b[1] == "Handling").lower()))
+    res.append(("Grebet 'find det mindste/ene … måske …' højst én gang pr. uge", find <= 1, f"{find} gange"))
     aften = sum(1 for p in posts if re.search(r"\bi aften\b", " ".join(b[2] for b in p.get("beats", []) if b[1] == "Handling").lower()))
     res.append(("Grebet ligger 'i aften' højst 2 gange i ugen", aften <= 2, f"{aften} gange"))
     for a, b in zip(posts, posts[1:]):
