@@ -241,7 +241,7 @@ def tjek_k8(p):
 # Kørsel 9: publiceringsdatoen blev ignoreret to gange, og passiv form var den eneste AI-markør.
 MAANEDER = ["januar", "februar", "marts", "april", "maj", "juni", "juli", "august", "september", "oktober", "november", "december"]
 UGE_RELATIV = r"før den nye uge|i weekenden|næste uge|på mandag|i morgen tidlig"
-PASSIV = r"\b(bliver|blev) (?!(det|dit|mit|sit|alt|godt|let|nemt|bedst|mest|sent|tit|ikke)\b)\w+(et|t|s)\b|\b\w+es\b(?= af)"  # målefejl rettet K12: "bliver det" er ikke passiv
+PASSIV = r"\b(bliver|blev) (?!(det|dit|mit|sit|alt|godt|let|nemt|bedst|mest|sent|tit|ikke|sjældent|altid|tydeligt|vigtigt)\b)\w+(et|t|s)\b|\b\w+es\b(?= af)"  # målefejl rettet K12: "bliver det" er ikke passiv
 
 
 def tjek_k9(p, tale):
