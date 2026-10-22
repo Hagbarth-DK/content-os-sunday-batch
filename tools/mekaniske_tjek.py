@@ -314,7 +314,7 @@ def uge(posts):
 # ikke stop. Sproget går forud for formen (Hagbarths dansk — sprogreference).
 ADVARSEL = ("Problemordet", "Emneordet står i første sætning", "Emneordet står i billedtekstens linje 1",
             "Emneordet står i situationens handling", "Grebet bærer idébankens greb", "Bevis = Den røde tråd led 4",
-            "Situationens sted står i teksten", "Hook-vinkel")
+            "Situationens sted står i teksten")  # Hook-vinkel er igen stop (fejlagtigt nedgraderet efter K11, fanget i K12)
 
 
 def mark(navn, ok):
