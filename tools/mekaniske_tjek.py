@@ -101,7 +101,10 @@ def tjek_k5(p, tale, sk, foerste, dele, linjer):
     sidste = foer_cta[-1] if foer_cta else ""
     m = re.search(MORAL, sidste.lower())
     res.append(("Ingen moralsk afrunding før CTA", not m, sidste[:60] if m else ""))
-    n_ikke = len(re.findall(r"\bikke\b", tale.lower()))
+    uden_led4 = tale
+    for l in LED4_HELT:
+        uden_led4 = uden_led4.replace(l, " ")  # Hagbarths egen talte led 4 tæller ikke med
+    n_ikke = len(re.findall(r"\bikke\b", uden_led4.lower()))
     res.append(("Højst to 'ikke' (ingen dobbelt ikke-X-kontrast)", n_ikke <= 2, f"{n_ikke}"))
     # Etiketter følger indholdet (kontrolleret, ikke deklareret)
     hv, it, f1 = p["hook_vinkel"], p["indholdstype"], foerste.lower()
@@ -131,8 +134,12 @@ def tjek_k5(p, tale, sk, foerste, dele, linjer):
 # måles, måles nu her; resten står i skribentens selvtjek (SOP trin 2b).
 FYLD = r"det har du vidst længe|det, der virker, er|det er det hele|sådan er det bare|det ved du godt"
 # Kørsel 8: delstrenge var ikke nok; skribenten omskrev rammen om dem. Hele sætningerne ordret.
-LED4 = ["30 år med at få systemer til at holde i virksomheder, også når konsulenten er kørt hjem.",
-        "Jeg har selv stået præcis dér: travl og leverende på jobbet, med resten sat på pause."]
+LED4 = [  # Talt version, Hagbarth 21/10-2026 kl. 23.48 (sprogreference afsnit 3b). Erstatter den skrevne ordlyd i video.
+        "Jeg har brugt mere end 30 år på at få systemer til at holde i virksomheder.",
+        "Jeg har givet det meste på arbejdet, og så har jeg ikke flyttet mig privat."]
+LED4_HELT = ("Jeg har brugt mere end 30 år på at få systemer til at holde i virksomheder. Også når konsulenten ikke er der. "
+             "Også når jeg ikke er der. Systemet skal jo bare virke.",
+             "Men jeg kender det fra mig selv. Jeg har givet det meste på arbejdet, og så har jeg ikke flyttet mig privat.")
 
 
 def tjek_k6(p, tale, emne, dele, saet):
