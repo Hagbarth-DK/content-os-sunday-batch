@@ -22,15 +22,15 @@ def opslag(P, korsel):
     for p in P:
         noter = (f"{korsel}\n{p.get('noter', '')}\nEmne (det, der ligger stille): {p.get('emne', '')}\n"
                  f"Kildens søjle: {p.get('idebank_soejle', '')}\nProblem (hvorfor det ligger stille): {p.get('problem', '')}\n"
-                 f"Skribentens selvtjek: AI-markører {p.get('selvtjek', {}).get('ai_markoerer', '?')} · send til: {p.get('selvtjek', {}).get('send_til', '')}\nVideoformat: {p['videoformat']} · Talking head{' med KLIP fra assets/broll' if any(b[0] == 'KLIP' for b in p['beats']) else ', kun AV'}\n"
-                 f"Indholdstype: {p['indholdstype']}\nHook-vinkel: {p['hook_vinkel']}\nLyd: {p['lyd']}\nStemning: {p['stemning']}")
+                 f"Skribentens selvtjek: AI-markører {p.get('selvtjek', {}).get('ai_markoerer', '?')} · send til: {p.get('selvtjek', {}).get('send_til', '')}\nVideoformat: {p.get('videoformat', 'A')} · Talking head{' med KLIP fra assets/broll' if any(b[0] == 'KLIP' for b in p['beats']) else ', kun AV'}\n"
+                 f"Indholdstype: {p.get('indholdstype', '')}\nHook-vinkel: {p.get('hook_vinkel', '')}\nLyd: {p.get('lyd', '')}\nStemning: {p.get('stemning', '')}")
         out.append({"properties": {
-            "Titel": p["titel"], "Status": "Draft", "Format": "Talking Head", "Søjle": p["soejle"],
-            "Job i tragten": p["tragt"], "Hook": p["beats"][0][2], "Hook-kilde": "Egen",
+            "Titel": p["titel"], "Status": "Draft", "Format": "Talking Head", "Søjle": p.get("soejle", ""),
+            "Job i tragten": p.get("tragt", ""), "Hook": p["beats"][0][2], "Hook-kilde": "Egen",
             "Billedtekst": p["billedtekst"], "Keyword": "START", "Platform": '["Instagram"]', "Account": "Hagbarth",
             "date:Publiceringsdato:start": p["dato"], "date:Publiceringsdato:is_datetime": 0,
             "Manuskript": manus(p), "Skærmtekst (hook)": p["skaermtekst"],
-            "Kilde-materiale": p["ide"], "Noter": noter, "Gatekeeper": "Ikke kørt",
+            "Kilde-materiale": p.get("ide", ""), "Noter": noter, "Gatekeeper": "Ikke kørt",
             "Tjek": "OK (tools/mekaniske_tjek.py)"}})
     return out
 
