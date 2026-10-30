@@ -1,0 +1,1 @@
+2026-10-30T18:27:55Z ADVARSEL: ny nøgle med ny værdi kunne ikke gemmes (mangler TOKEN_REFRESH_PAT). Gammel nøgle virker indtil sin udløbsdato.
