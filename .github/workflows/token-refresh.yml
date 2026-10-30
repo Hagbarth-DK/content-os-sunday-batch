@@ -1,0 +1,64 @@
+name: Forny Instagram-nøgle
+
+# Instagram-nøglen (IG_ACCESS_TOKEN) udløber ca. 60 dage efter, den er lavet
+# eller sidst fornyet. Dette workflow fornyer den hver mandag, længe før den
+# udløber, og gemmer den nye nøgle i repoets secret, så publiceringen aldrig
+# stopper. Instagram tillader fornyelse, så længe den gamle nøgle stadig virker.
+#
+# Kræver ét ekstra secret: TOKEN_REFRESH_PAT — en fine-grained GitHub-nøgle,
+# der kun har adgang til dette repo med rettigheden "Secrets: Read and write".
+# Uden den må workflowet ikke skrive det nye secret.
+
+on:
+  schedule:
+    - cron: "0 6 * * 1"   # hver mandag kl. 06:00 UTC
+  workflow_dispatch: {}   # manuel kørsel fra Actions-fanen
+  push:
+    paths:
+      - "trigger/refresh.txt"   # Claude kan starte en kørsel med et push hertil
+
+permissions:
+  contents: read
+  issues: write   # alarm-issue (sender mail til ejeren)
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Forny nøglen hos Instagram og gem den
+        env:
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          GH_TOKEN: ${{ secrets.TOKEN_REFRESH_PAT }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          echo "## Fornyelse af Instagram-nøgle" > alarm.md
+          if [ -z "${GH_TOKEN}" ]; then
+            echo "Secret TOKEN_REFRESH_PAT mangler, så den nye nøgle kan ikke gemmes. Den gamle nøgle er ikke ændret." >> alarm.md
+            exit 1
+          fi
+          RESP="$(curl -sS "https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token=${IG_ACCESS_TOKEN}")"
+          NEW="$(printf '%s' "$RESP" | python3 -c 'import sys,json; print(json.load(sys.stdin).get("access_token",""))')"
+          SECS="$(printf '%s' "$RESP" | python3 -c 'import sys,json; print(json.load(sys.stdin).get("expires_in",0))')"
+          if [ -z "$NEW" ]; then
+            MSG="$(printf '%s' "$RESP" | python3 -c 'import sys,json; d=json.load(sys.stdin).get("error",{}); print(d.get("message","ukendt fejl"))')"
+            echo "Instagram afviste fornyelsen: ${MSG}. Er nøglen allerede udløbet, skal der laves en ny hos Meta. Den gamle nøgle er ikke ændret." >> alarm.md
+            exit 1
+          fi
+          echo "::add-mask::${NEW}"
+          printf '%s' "$NEW" | gh secret set IG_ACCESS_TOKEN --repo "$REPO"
+          DAYS=$(( SECS / 86400 ))
+          echo "Ny nøgle gemt. Den virker de næste ${DAYS} dage (til $(date -u -d "+${SECS} seconds" +%F))."
+          rm -f alarm.md
+
+      - name: Alarm ved fejl
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          OWNER: ${{ github.repository_owner }}
+        run: |
+          gh label create alarm --color B60205 --description "Publicering fejlet" --repo "${{ github.repository }}" 2>/dev/null || true
+          if [ -f alarm.md ]; then DETAILS="$(cat alarm.md)"; else DETAILS="Fornyelsen af Instagram-nøglen stoppede uventet. Se loggen."; fi
+          BODY="$(printf '@%s\n\n%s\n\nLog: %s' "$OWNER" "$DETAILS" "$RUN_URL")"
+          gh issue create --repo "${{ github.repository }}" --title "🔴 Fornyelse af Instagram-nøgle fejlet $(date -u +%F)" --label alarm --body "$BODY"
