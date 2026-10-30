@@ -18,14 +18,17 @@ on:
       - "trigger/refresh.txt"   # Claude kan starte en kørsel med et push hertil
 
 permissions:
-  contents: read
+  contents: write   # gemmer status (udløbsdato, aldrig nøglen) i trigger/refresh-status.txt
   issues: write   # alarm-issue (sender mail til ejeren)
 
 jobs:
   refresh:
     runs-on: ubuntu-latest
     steps:
-      - name: Forny nøglen hos Instagram og gem den
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Forny nøglen hos Instagram
         env:
           IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
           GH_TOKEN: ${{ secrets.TOKEN_REFRESH_PAT }}
@@ -33,23 +36,35 @@ jobs:
         run: |
           set -euo pipefail
           echo "## Fornyelse af Instagram-nøgle" > alarm.md
-          if [ -z "${GH_TOKEN}" ]; then
-            echo "Secret TOKEN_REFRESH_PAT mangler, så den nye nøgle kan ikke gemmes. Den gamle nøgle er ikke ændret." >> alarm.md
-            exit 1
-          fi
           RESP="$(curl -sS "https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token=${IG_ACCESS_TOKEN}")"
           NEW="$(printf '%s' "$RESP" | python3 -c 'import sys,json; print(json.load(sys.stdin).get("access_token",""))')"
           SECS="$(printf '%s' "$RESP" | python3 -c 'import sys,json; print(json.load(sys.stdin).get("expires_in",0))')"
           if [ -z "$NEW" ]; then
             MSG="$(printf '%s' "$RESP" | python3 -c 'import sys,json; d=json.load(sys.stdin).get("error",{}); print(d.get("message","ukendt fejl"))')"
             echo "Instagram afviste fornyelsen: ${MSG}. Er nøglen allerede udløbet, skal der laves en ny hos Meta. Den gamle nøgle er ikke ændret." >> alarm.md
-            exit 1
+            STATUS="FEJL: Instagram afviste fornyelsen (${MSG})"
+          else
+            echo "::add-mask::${NEW}"
+            UNTIL="$(date -u -d "+${SECS} seconds" +%F)"
+            if [ "$NEW" = "$IG_ACCESS_TOKEN" ]; then
+              STATUS="OK: samme nøgle, nu gyldig til ${UNTIL}. Intet skulle gemmes."
+            elif [ -n "${GH_TOKEN}" ]; then
+              printf '%s' "$NEW" | gh secret set IG_ACCESS_TOKEN --repo "$REPO"
+              STATUS="OK: ny nøgle gemt, gyldig til ${UNTIL}."
+            else
+              echo "Instagram gav en ny nøgle med en ny værdi, men den kan ikke gemmes uden secret TOKEN_REFRESH_PAT. Den gamle nøgle virker stadig indtil sin oprindelige udløbsdato." >> alarm.md
+              STATUS="ADVARSEL: ny nøgle med ny værdi kunne ikke gemmes (mangler TOKEN_REFRESH_PAT). Gammel nøgle virker indtil sin udløbsdato."
+            fi
           fi
-          echo "::add-mask::${NEW}"
-          printf '%s' "$NEW" | gh secret set IG_ACCESS_TOKEN --repo "$REPO"
-          DAYS=$(( SECS / 86400 ))
-          echo "Ny nøgle gemt. Den virker de næste ${DAYS} dage (til $(date -u -d "+${SECS} seconds" +%F))."
-          rm -f alarm.md
+          mkdir -p trigger
+          printf '%s %s\n' "$(date -u +%FT%TZ)" "$STATUS" > trigger/refresh-status.txt
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add trigger/refresh-status.txt
+          git commit -m "Status: fornyelse af Instagram-nøgle" || true
+          git push || true
+          echo "$STATUS"
+          case "$STATUS" in OK*) rm -f alarm.md ;; *) exit 1 ;; esac
 
       - name: Alarm ved fejl
         if: failure()
