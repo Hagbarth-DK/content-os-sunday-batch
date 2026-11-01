@@ -15,5 +15,6 @@ Genereret i HeyGen (`text_to_video`, heygen-video-1, 9:16, 1080p, 5 sek., ca. 4 
 | cykelstyr-cykelsti-morgen.mp4 | POV fra cykelstyret: rolig cykelsti mod byen om morgenen, ingen ansigter (Gemini (Veo), original 1280x720, 10 sek., beskåret til 9:16, 5,2 sek., uden lyd) | 4/11 Jeg cyklede 22 kilometer (planlagt) |
 | statusmoede-med-sig-selv.mp4 | POV: hånd lægger notesbog og pen på et bord i et lille mødelokale, tom stol overfor, morgenlys (Gemini (Veo), original 720x1280, 10 sek., kortet til 5,2 sek., uden lyd) | 7/11 Tre spørgsmål til din uge (planlagt) |
 | hullet-rettes-i-proces.mp4 | POV: en hånd sætter en cirkel om ét trin i en håndtegnet procesoversigt og retter det med en pen (Gemini (Veo), original 720x1280, 10 sek., udsnit 1,2–6,4 sek., uden lyd) | 6/11 Din plan er ikke dårlig (planlagt) |
+| opgave-afkrydset-paa-liste.mp4 | POV: en hånd sætter flueben ud for opgaver på en papirliste på et skrivebord, laptop sløret bagved (Gemini (Veo), original 720x1280, 10 sek., udsnit 3,0–8,2 sek., uden lyd). Teksten på listen er ulæselig pseudo-håndskrift | 5/11 Var træningen god nok? (planlagt) |
 
 Overblik over alle klip: Notion-databasen "B-roll-bibliotek" under Visual Assets. Originalerne ligger i OneDrive: Life System Architect/04 Marketing/Content OS/B-roll/Situationer/.
