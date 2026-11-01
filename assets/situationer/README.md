@@ -12,5 +12,6 @@ Genereret i HeyGen (`text_to_video`, heygen-video-1, 9:16, 1080p, 5 sek., ca. 4 
 | speedbaad-i-fart.mp4 | Hvid speedbåd planer i høj fart mod kameraet, roligt blåt vand (HeyGen-id 1a349352b5e646608db10cf86f2bbf36) | 24/10 Du starter forfra igen |
 | speedbaad-taber-fart.mp4 | Hvid speedbåd på vandet, set forfra, sætter farten ned. Kom drejet 90° fra HeyGen: rettet (transpose=2) og beskåret til 9:16, 1080x1920. Råfilen ligger i OneDrive (HeyGen-id 02c02179b0824c47b97884f281ee4b55) | 24/10 Du starter forfra igen |
 | haand-skriver-i-notesbog.mp4 | POV: en hånd skriver i en notesbog, kaffekop ved siden af (HeyGen-id 38cadc89869f47579bb6bb4e5dc023b2) | 24/10 Du starter forfra igen |
+| cykelstyr-cykelsti-morgen.mp4 | POV fra cykelstyret: rolig cykelsti mod byen om morgenen, ingen ansigter (Gemini (Veo), original 1280x720, 10 sek., beskåret til 9:16, 5,2 sek., uden lyd) | 4/11 Jeg cyklede 22 kilometer (planlagt) |
 
 Overblik over alle klip: Notion-databasen "B-roll-bibliotek" under Visual Assets. Originalerne ligger i OneDrive: Life System Architect/04 Marketing/Content OS/B-roll/Situationer/.
