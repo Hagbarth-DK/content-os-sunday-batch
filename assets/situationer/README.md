@@ -36,3 +36,5 @@ Klippet til 5 sek., 9:16, 1080x1920, uden lyd. Prompts står i B-roll-biblioteke
 - traeningstoej-lagt-frem-aften.mp4 — hænder lægger træningstøj og løbesko frem på stol ved sengen, aftenlys
 - gaatur-foedder-vaade-blade.mp4 — POV: fødder går på fortov med våde efterårsblade
 - kalender-dato-cirkles.mp4 — hånd tegner en cirkel om en dato i papirvægkalender
+- moedebord-kaffe-kontor.mp4 — mødebord med kaffe, notesbog og papirer, mødelokale i baggrunden (Gemini 7/11, registreret 15/11)
+- haand-skriver-brev.mp4 — hånd skriver med fyldepen på et ark (uleselig skrift) (Gemini 7/11, registreret 15/11)
