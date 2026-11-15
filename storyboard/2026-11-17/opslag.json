@@ -31,20 +31,32 @@
    [
     "GRAF",
     "Forståelse",
-    "Næsten halvdelen af dem, der havde tænkt sig at motionere, nåede ikke op på det, de havde sat sig for.",
-    "GRAF over avatar: 10 studier · ca. 4.000 mennesker · næsten halvdelen nåede ikke det, de havde sat sig for"
+    "Næsten halvdelen af dem, der havde tænkt sig at motionere,",
+    "GRAF over avatar: 10 studier · ca. 4.000 mennesker · næsten halvdelen"
+   ],
+   [
+    "KLIP",
+    "Forståelse",
+    "nåede ikke op på det, de havde sat sig for.",
+    "notesbog-plan-streget-over.mp4: en plan i notesbogen streges over"
    ],
    [
     "KLIP",
     "Handling",
-    "Så hvis du gerne vil, men ikke kommer af sted, så er du altså ikke den eneste.",
-    "traeningstaske-i-entre.mp4: træningstasken står i entréen"
+    "Så hvis du gerne vil, men ikke kommer af sted,",
+    "traeningstaske-i-entre.mp4: træningstasken står urørt i entréen"
    ],
    [
     "AV",
     "Handling",
-    "Det er bare ikke nok at ville. Gør det lettere at komme af sted,",
+    "så er du altså ikke den eneste. Det er bare ikke nok at ville.",
     "Look: Bibliotek, sort jakke. Let zoom."
+   ],
+   [
+    "KLIP",
+    "Handling",
+    "Gør det lettere at komme af sted,",
+    "gaasko-ved-doeren-bilnoegler.mp4: sko og nøgler klar ved døren"
    ],
    [
     "KLIP",
@@ -145,8 +157,14 @@
    [
     "GRAF",
     "Forståelse",
-    "Dem, der på forhånd havde besluttet hvornår og hvor, klarede sig bedre end dem, der bare havde et mål.",
-    "GRAF over avatar: Bare et mål / Hvornår + hvor = bedre"
+    "Dem, der på forhånd havde besluttet hvornår og hvor,",
+    "GRAF over avatar: Hvornår + hvor besluttet på forhånd"
+   ],
+   [
+    "KLIP",
+    "Forståelse",
+    "klarede sig bedre end dem, der bare havde et mål.",
+    "opgave-afkrydset-paa-liste.mp4: en opgave krydses af på listen"
    ],
    [
     "KLIP",
@@ -157,7 +175,13 @@
    [
     "KLIP",
     "Handling",
-    "Så beslut det nu, for eksempel: Når jeg kommer ind ad døren klokken fem, tager jeg træningstøjet på.",
+    "Så beslut det nu, for eksempel:",
+    "kalender-paa-telefon.mp4: kalenderen på telefonen"
+   ],
+   [
+    "KLIP",
+    "Handling",
+    "Når jeg kommer ind ad døren klokken fem, tager jeg træningstøjet på.",
     "haand-doerhaandtag-regn.mp4: hånd på dørhåndtaget i entréen"
    ],
    [
@@ -202,8 +226,14 @@
    [
     "GRAF",
     "Forståelse",
-    "Men i et forsøg fra Stanford fik fire ud af fem flere idéer, mens de gik, end mens de sad stille.",
-    "GRAF over avatar: Sidder stille / Går = flere idéer hos 4 ud af 5"
+    "Men i et forsøg fra Stanford fik fire ud af fem flere idéer,",
+    "GRAF over avatar: Stanford · 4 ud af 5 fik flere idéer"
+   ],
+   [
+    "KLIP",
+    "Forståelse",
+    "mens de gik, end mens de sad stille.",
+    "bibliotek-rejser-sig-og-gaar.mp4: går mellem reolerne i biblioteket"
    ],
    [
     "KLIP",
@@ -214,7 +244,13 @@
    [
     "KLIP",
     "Handling",
-    "Så næste gang du mangler en idé, så tag jakken på og gå en tur på ti minutter.",
+    "Så næste gang du mangler en idé, så tag jakken på",
+    "gaasko-ved-doeren-bilnoegler.mp4: sko og nøgler klar ved døren"
+   ],
+   [
+    "KLIP",
+    "Handling",
+    "og gå en tur på ti minutter.",
     "gaatur-foedder-vaade-blade.mp4: POV, fødder går i våde efterårsblade (Gemini)"
    ],
    [
@@ -265,14 +301,32 @@
    [
     "GRAF",
     "Forståelse",
-    "Men i et amerikansk studie sagde 46 procent af dem, der lavede et nytårsforsæt, at de stadig var i gang et halvt år efter. Blandt dem, der bare ville ændre noget senere, var det 4 procent.",
-    "GRAF over avatar: Nytårsforsæt 46 % · Senere 4 % · efter et halvt år (efter eget udsagn)"
+    "Men i et amerikansk studie sagde 46 procent af dem, der lavede et nytårsforsæt,",
+    "GRAF over avatar: Nytårsforsæt: 46 %"
+   ],
+   [
+    "KLIP",
+    "Forståelse",
+    "at de stadig var i gang et halvt år efter.",
+    "cykelstyr-cykelsti-morgen.mp4: cykelstyr på cykelstien om morgenen"
+   ],
+   [
+    "GRAF",
+    "Forståelse",
+    "Blandt dem, der bare ville ændre noget senere, var det 4 procent.",
+    "GRAF over avatar: Senere: 4 % · efter et halvt år (efter eget udsagn)"
    ],
    [
     "AV",
     "Udbytte",
-    "Og dem, der lykkedes, troede oftere på, at de kunne, og var klar, før de gik i gang.",
+    "Og dem, der lykkedes, troede oftere på, at de kunne,",
     "Look: skov. Let zoom."
+   ],
+   [
+    "KLIP",
+    "Udbytte",
+    "og var klar, før de gik i gang.",
+    "statusmoede-med-sig-selv.mp4: statusmøde med sig selv"
    ],
    [
     "KLIP",

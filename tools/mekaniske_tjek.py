@@ -8,10 +8,22 @@ Beslutning 24/10-2026 (Hagbarth):
   - Formreglerne fra testkørsel 1-15 er parkeret. Den gamle version ligger i
     tools/arkiv/mekaniske_tjek_K15_2026-10-22.py og bruges ikke.
 
+Tilføjet 15/11-2026 (Hagbarth, rodårsag: B-roll blev ikke lavet i første omgang):
+  - Klip-rytme: hvert midter-beat højst ca. 4 sek. anslået taletid.
+  - Hvert KLIP/SIT-beat skal nævne et .mp4, der findes i assets/broll eller assets/situationer.
+  - Ingen pladsholdertekst (fx "Kandidat", "mangler") i billedbeskrivelser.
+
 Tjekket her fanger kun det, der aldrig må slippe igennem (Låste regler i Notion),
 plus det, produktionen teknisk afhænger af. ❌ = stop, ⚠️ = advarsel.
 """
-import json, re, sys
+import json, os, re, sys
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+KLIP_MAPPER = ["assets/broll", "assets/situationer"]
+# Klip-rytme (Hagbarth 15/11-2026, Iman-stil): midter-beats højst ca. 4 sek.
+ORD_PR_SEK = 3.5        # målt på onsdagsvideoen 18/11 (98 ord / 27,9 sek., speed 0.98)
+MAX_BEAT_SEK = 4.5      # "ca. 4 sek." med lidt luft
+PLADSHOLDER = r"kandidat|pladsholder|placeholder|\btbd\b|\btodo\b|mangler|når den er|skal laves|\?\?"
 
 FORBUDT = [r"diagnos\w*", r"\bvaner?\w*", r"\bbasic\b", r"t-kryds\w*", r"\breview\b", r"check-in",
            r"\bmatch\b", r"to-do", r"selvindsigt", r"selvforståelse", r"\btændt\b", r"selvtilfredshed"]
@@ -29,6 +41,45 @@ def talt(manus):
 
 def ord(t):
     return re.findall(r"[\wæøåÆØÅ]+", t)
+
+
+def sek(talt_tekst):
+    """Anslået taletid. Tal læses som ord (4.000 = 'fire tusind'), derfor tæller et tal for 2 ord."""
+    n = len(re.findall(r"[a-zA-ZæøåÆØÅéÉ]+", talt_tekst)) + 2 * len(re.findall(r"\d+(?:[.,]\d+)*", talt_tekst))
+    return n / ORD_PR_SEK
+
+
+def klip_fil(beskrivelse):
+    m = re.search(r"([\w\-]+\.mp4)", beskrivelse or "")
+    if not m:
+        return None, False
+    return m.group(1), any(os.path.exists(os.path.join(ROOT, d, m.group(1))) for d in KLIP_MAPPER)
+
+
+def rytme(p):
+    """Klip-rytme og B-roll: midter-beats ≤ ca. 4 sek.; KLIP/SIT-beats skal pege på en fil, der findes."""
+    res = []
+    beats = p.get("beats") or []
+    if not beats:
+        return [("Beats findes (klip-rytme kan tjekkes)", False, "ingen beats", "stop")]
+    lange = [f"beat {i + 1}: {sek(b[2]):.1f} sek." for i, b in enumerate(beats)
+             if 0 < i < len(beats) - 1 and sek(b[2]) > MAX_BEAT_SEK]
+    res.append((f"Klip-rytme: midter-beats højst ca. 4 sek. (grænse {MAX_BEAT_SEK})", not lange, "; ".join(lange), "stop"))
+    mangler, pladsh = [], []
+    for i, b in enumerate(beats):
+        typ, beskr = b[0], b[3] if len(b) > 3 else ""
+        if typ in ("KLIP", "SIT"):
+            fil, findes = klip_fil(beskr)
+            if not findes:
+                mangler.append(f"beat {i + 1}: {fil or 'intet .mp4 angivet'}")
+        if re.search(PLADSHOLDER, beskr or "", re.I):
+            pladsh.append(f"beat {i + 1}")
+    res.append(("B-roll-klip findes i assets/ (broll eller situationer)", not mangler, "; ".join(mangler), "stop"))
+    res.append(("Ingen pladsholdertekst i billedbeskrivelser", not pladsh, ", ".join(pladsh), "stop"))
+    midt = beats[1:-1]
+    ikke_av = sum(1 for b in midt if b[0] != "AV")
+    res.append(("Midten er mest B-roll/grafik (Iman-stil)", ikke_av >= len(midt) / 2, f"{ikke_av} af {len(midt)} ikke-avatar", "advarsel"))
+    return res
 
 
 def manuskript(p):
@@ -70,6 +121,7 @@ def tjek(p):
                 f"tale starter: '{tale[:40]}'", "advarsel"))
     n = len(ord(tale))
     res.append(("Længde ca. som Imans (højst ca. 120 ord)", n <= 120, f"{n} ord", "advarsel"))
+    res += rytme(p)
     return res
 
 
