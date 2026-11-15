@@ -2,7 +2,7 @@
   {
     "id": "M3",
     "dag": "Tirsdag 17/11-2026 · Myter",
-    "titel": "Når du virkelig vil det (næsten halvdelen gør det ikke)",
+    "titel": "Når du gerne vil træne (næsten halvdelen gør det ikke)",
     "videoformat": "A",
     "soejle": "4. Systemet og ansvaret",
     "tragt": "Attract",
@@ -10,8 +10,8 @@
     "hooktype": "Modsigelse (myte)",
     "vinkel": "Myte mod dokumenteret sandhed: viljen er nok",
     "look": "sort-jakke",
-    "skaermtekst": "Når du *virkelig* vil det",
-    "billedtekst": "Myten: Når du virkelig vil det, så gør du det.\nI ti studier fik næsten halvdelen af dem, der ville motionere, det ikke gjort. Viljen er ikke nok i sig selv. Gør det lettere, og læg træningstøjet frem i aften.\nKommenter START, så viser den gratis test dig, hvor dit eget liv falder igennem.\n\n#motivation #hverdag\n\n🤖 Skabt med AI (avatar, stemme og video).",
+    "skaermtekst": "Når du gerne vil *træne*",
+    "billedtekst": "Myten: Når du gerne vil træne, så får du det også gjort.\nForskere har kigget på ti studier. Næsten halvdelen af dem, der ville motionere, nåede ikke op på det, de havde sat sig for. Det er ikke nok at ville. Gør det lettere at komme af sted, og læg træningstøjet frem i aften.\nKommenter START, så viser den gratis test dig, hvor dit eget liv falder igennem.\n\n#motivation #hverdag\n\n🤖 Skabt med AI (avatar, stemme og video).",
     "lyd": "Rolig tale, ingen musik under hooket.",
     "stemning": "Rolig autoritet, murstensvæg i biblioteket.",
     "kilde": "Rhodes RE, de Bruijn GJ (2013). How big is the physical activity intention-behaviour gap? Br J Health Psychol 18(2):296-309. https://doi.org/10.1111/bjhp.12032 — 10 studier, N = 3.899. 36 % var 'intenders' der ikke fulgte op, 42 % lykkedes → 46 % af dem med intention fik det ikke gjort.",
@@ -19,19 +19,19 @@
       [
         "AV",
         "Genkendelse",
-        "Når du virkelig vil det, så gør du det. Sådan lyder myten.",
+        "Når du gerne vil træne, så får du det også gjort. Sådan lyder myten.",
         "Look: Bibliotek, sort jakke (står). Halvtotal."
       ],
       [
         "KLIP",
         "Forståelse",
-        "Men forskerne har kigget på ti studier med knap 4.000 mennesker. Næsten halvdelen af dem, der havde tænkt sig at motionere, fik det ikke gjort.",
-        "traeningstaske-i-entre.mp4 + GRAF: 10 studier · ca. 4.000 mennesker · næsten halvdelen fik det ikke gjort"
+        "Men forskerne har kigget på ti studier med knap 4.000 mennesker. Næsten halvdelen af dem, der havde tænkt sig at motionere, nåede ikke op på det, de havde sat sig for.",
+        "traeningstaske-i-entre.mp4 + GRAF: 10 studier · ca. 4.000 mennesker · næsten halvdelen nåede ikke det, de havde sat sig for"
       ],
       [
         "AV",
         "Handling",
-        "Så hvis du står stille, selvom du gerne vil, er du ikke alene. Viljen er bare ikke nok i sig selv. Gør det lettere i stedet, og læg træningstøjet frem i aften.",
+        "Så hvis du gerne vil, men ikke kommer af sted, så er du altså ikke den eneste. Det er bare ikke nok at ville. Gør det lettere at komme af sted, og læg træningstøjet frem i aften.",
         "Look: Bibliotek, sort jakke. Let zoom."
       ],
       [
@@ -41,8 +41,8 @@
         "Nærbillede, zoom 1,25x. Tekst: Kommenter START"
       ]
     ],
-    "manuskript": "Når du virkelig vil det, så gør du det. Sådan lyder myten. Men forskerne har kigget på ti studier med knap 4.000 mennesker. Næsten halvdelen af dem, der havde tænkt sig at motionere, fik det ikke gjort. Så hvis du står stille, selvom du gerne vil, er du ikke alene. Viljen er bare ikke nok i sig selv. Gør det lettere i stedet, og læg træningstøjet frem i aften. Kommenter START, så viser den gratis test dig, hvor dit eget liv falder igennem.",
-    "gatekeeper": "🟡 Gul"
+    "manuskript": "Når du gerne vil træne, så får du det også gjort. Sådan lyder myten. Men forskerne har kigget på ti studier med knap 4.000 mennesker. Næsten halvdelen af dem, der havde tænkt sig at motionere, nåede ikke op på det, de havde sat sig for. Så hvis du gerne vil, men ikke kommer af sted, så er du altså ikke den eneste. Det er bare ikke nok at ville. Gør det lettere at komme af sted, og læg træningstøjet frem i aften. Kommenter START, så viser den gratis test dig, hvor dit eget liv falder igennem.",
+    "gatekeeper": "🟢 Grøn"
   },
   {
     "id": "M4",
@@ -87,7 +87,7 @@
       ]
     ],
     "manuskript": "Denne gang holder planen. Det tænker du, hver gang du sætter en dato. Men i et canadisk studie regnede studerende med at blive færdige med deres afsluttende opgave på 34 dage. Det tog i snit 56, og kun knap hver tredje blev færdig til den tid, de selv havde regnet med. På jobbet kigger man jo på, hvor lang tid det sidste projekt tog. Så gør det samme i dag, før du sætter din næste dato: Se på, hvor lang tid det tog sidst. Kommenter START, så viser den gratis test dig, hvor din plan plejer at skride.",
-    "gatekeeper": "🟡 Gul"
+    "gatekeeper": "🟢 Grøn"
   },
   {
     "id": "M5",
@@ -132,12 +132,12 @@
       ]
     ],
     "manuskript": "Du venter på lysten. Først når den kommer, går du i gang. Men du behøver ikke vente på den. Forskerne har kigget på 94 forsøg med over 8.000 mennesker. Dem, der på forhånd havde besluttet hvornår og hvor, klarede sig bedre end dem, der bare havde et mål. På jobbet har et møde jo også et klokkeslæt og et lokale. Så beslut det nu, for eksempel: Når jeg kommer ind ad døren klokken fem, tager jeg træningstøjet på. Kommenter START, så viser den gratis test dig, hvor du typisk går i stå.",
-    "gatekeeper": "🟡 Gul"
+    "gatekeeper": "🟢 Grøn"
   },
   {
     "id": "M6",
     "dag": "Fredag 20/11-2026 · Myter",
-    "titel": "Jeg har ikke tid til en gåtur (fire ud af fem)",
+    "titel": "Ingen tid til en gåtur (fire ud af fem)",
     "videoformat": "A",
     "soejle": "3. Kroppen som indgang",
     "tragt": "Activate",
@@ -145,8 +145,8 @@
     "hooktype": "Sætningen de selv siger",
     "vinkel": "Myte mod dokumenteret sandhed: man tænker bedst, når man sidder stille",
     "look": "lyseblaa-skjorte",
-    "skaermtekst": "Jeg har ikke *tid*",
-    "billedtekst": "Jeg har ikke tid til en gåtur, jeg sidder fast i det her.\nI et forsøg fra Stanford fik fire ud af fem flere idéer, mens de gik. Så næste gang du mangler en idé, så gå en tur på ti minutter. Opgaven er der stadig, når du kommer tilbage.\nKommenter START, så viser den gratis test dig, hvor dit eget liv kommer bagerst.\n\n#gåtur #hverdag\n\n🤖 Skabt med AI (avatar, stemme og video).",
+    "skaermtekst": "Ingen tid til en *gåtur*",
+    "billedtekst": "Ingen tid til en gåtur nu, jeg skal lige finde på noget først.\nI et forsøg fra Stanford fik fire ud af fem flere idéer, mens de gik, end mens de sad stille. Så næste gang du mangler en idé, så gå en tur på ti minutter. Opgaven er der stadig, når du kommer tilbage.\nKommenter START, så viser den gratis test dig, hvor dit eget liv kommer bagerst.\n\n#gåtur #hverdag\n\n🤖 Skabt med AI (avatar, stemme og video).",
     "lyd": "Rolig tale.",
     "stemning": "Åbent atrium, lyseblå skjorte, stående, lys og luft.",
     "kilde": "Oppezzo M, Schwartz DL (2014). Give your ideas some legs: the positive effect of walking on creative thinking. J Exp Psychol Learn Mem Cogn 40(4):1142-52. https://doi.org/10.1037/a0036577 — Eksperiment 1: gang øgede kreativiteten (idéer på GAU-testen) for 81 % af deltagerne. Eksperiment 2: effekten hang ved, når de satte sig igen.",
@@ -154,7 +154,7 @@
       [
         "AV",
         "Genkendelse",
-        "Jeg har ikke tid til en gåtur, jeg sidder fast i det her. Det er tit det første, der ryger, når jobbet presser.",
+        "Ingen tid til en gåtur nu, jeg skal lige finde på noget først. Det er tit det første, der ryger, når jobbet presser.",
         "Look: Bibliotek, lyseblå skjorte (står ved gelænderet)."
       ],
       [
@@ -176,8 +176,8 @@
         "Nærbillede, zoom 1,25x. Tekst: Kommenter START"
       ]
     ],
-    "manuskript": "Jeg har ikke tid til en gåtur, jeg sidder fast i det her. Det er tit det første, der ryger, når jobbet presser. Men i et forsøg fra Stanford fik fire ud af fem flere idéer, mens de gik, end mens de sad stille. Og de fik stadig flere idéer, da de satte sig igen. Så næste gang du mangler en idé, så tag jakken på og gå en tur på ti minutter. Opgaven er der stadig, når du kommer tilbage. Kommenter START, så viser den gratis test dig, hvor dit eget liv kommer bagerst.",
-    "gatekeeper": "🟡 Gul"
+    "manuskript": "Ingen tid til en gåtur nu, jeg skal lige finde på noget først. Det er tit det første, der ryger, når jobbet presser. Men i et forsøg fra Stanford fik fire ud af fem flere idéer, mens de gik, end mens de sad stille. Og de fik stadig flere idéer, da de satte sig igen. Så næste gang du mangler en idé, så tag jakken på og gå en tur på ti minutter. Opgaven er der stadig, når du kommer tilbage. Kommenter START, så viser den gratis test dig, hvor dit eget liv kommer bagerst.",
+    "gatekeeper": "🟢 Grøn"
   },
   {
     "id": "M7",
@@ -191,10 +191,10 @@
     "vinkel": "Myte mod dokumenteret sandhed: nytårsforsæt holder aldrig",
     "look": "skov",
     "skaermtekst": "*Nytårsforsæt* holder alligevel aldrig",
-    "billedtekst": "Nytårsforsæt holder alligevel aldrig. Det siger vi, og så bliver det ved snakken.\nI et amerikansk studie var 46 procent stadig i gang et halvt år efter, efter eget udsagn. Blandt dem, der bare ville ændre noget senere, var det 4 procent. Den ene gruppe havde en fast dato at starte fra. Du behøver ikke vente til nytår. Sæt din egen dato i dag.\nKommenter START, så viser den gratis test dig, hvad der typisk får dig til at vente.\n\n#nytårsforsæt #hverdag\n\n🤖 Skabt med AI (avatar, stemme og video).",
+    "billedtekst": "Nytårsforsæt holder alligevel aldrig. Det siger vi, og så bliver det ved snakken.\nI et amerikansk studie sagde 46 procent af dem med et nytårsforsæt, at de stadig var i gang et halvt år efter. Blandt dem, der bare ville ændre noget senere, var det 4 procent. Så vent ikke på senere. Sæt en dato i dag for, hvornår du går i gang.\nKommenter START, så viser den gratis test dig, hvad der typisk får dig til at vente.\n\n#nytårsforsæt #hverdag\n\n🤖 Skabt med AI (avatar, stemme og video).",
     "lyd": "Rolig tale.",
     "stemning": "Skoven, blå jakke (standardlook).",
-    "kilde": "Norcross JC, Mrykalo MS, Blagys MD (2002). Auld lang syne: success predictors, change processes, and self-reported outcomes of New Year's resolvers and nonresolvers. J Clin Psychol 58(4):397-405. https://doi.org/10.1002/jclp.1151 — 159 med nytårsforsæt, 123 sammenlignelige, der ville ændre noget senere. Efter 6 måneder: 46 % mod 4 % stadig i gang (selvrapporteret). Grupperne var ens i demografi og mål. 'Forskellen var en beslutning og en dato' er vores tolkning af, hvad der skilte grupperne ad.",
+    "kilde": "Norcross JC, Mrykalo MS, Blagys MD (2002). Auld lang syne: success predictors, change processes, and self-reported outcomes of New Year's resolvers and nonresolvers. J Clin Psychol 58(4):397-405. https://doi.org/10.1002/jclp.1151 — 159 med nytårsforsæt, 123 sammenlignelige, der ville ændre noget senere. Efter 6 måneder: 46 % mod 4 % stadig i gang (selvrapporteret). Grupperne var ens i demografi og mål. Ikke randomiseret. Hos dem med forsæt forudsagde tro på egen evne, færdigheder og parathed før 1. januar succes (abstract) — det er grundlaget for 'troede på, at de kunne, og var klar'.",
     "beats": [
       [
         "AV",
@@ -205,13 +205,13 @@
       [
         "GRAF",
         "Forståelse",
-        "Men i et amerikansk studie var 46 procent af dem, der lavede et nytårsforsæt, stadig i gang et halvt år efter. Blandt dem, der bare ville ændre noget senere, var det 4 procent.",
-        "GRAF: Nytårsforsæt 46 % · Senere 4 % · efter et halvt år"
+        "Men i et amerikansk studie sagde 46 procent af dem, der lavede et nytårsforsæt, at de stadig var i gang et halvt år efter. Blandt dem, der bare ville ændre noget senere, var det 4 procent.",
+        "GRAF: Nytårsforsæt 46 % · Senere 4 % · efter et halvt år (efter eget udsagn)"
       ],
       [
         "AV",
         "Udbytte",
-        "Den ene gruppe havde en fast dato at starte fra: 1. januar. Den anden ville bare ændre noget senere. Du behøver ikke vente til nytår. Sæt din egen dato i dag.",
+        "Og dem, der lykkedes, troede oftere på, at de kunne, og var klar, før de gik i gang. Så vent ikke på senere. Sæt en dato i dag for, hvornår du går i gang.",
         "Look: skov. Let zoom."
       ],
       [
@@ -221,7 +221,7 @@
         "Nærbillede, zoom 1,25x. Tekst: Kommenter START"
       ]
     ],
-    "manuskript": "Nytårsforsæt holder alligevel aldrig. Det siger vi tit, og så bliver det ved snakken. Men i et amerikansk studie var 46 procent af dem, der lavede et nytårsforsæt, stadig i gang et halvt år efter. Blandt dem, der bare ville ændre noget senere, var det 4 procent. Den ene gruppe havde en fast dato at starte fra: 1. januar. Den anden ville bare ændre noget senere. Du behøver ikke vente til nytår. Sæt din egen dato i dag. Kommenter START, så viser den gratis test dig, hvad der typisk får dig til at vente.",
-    "gatekeeper": "🔴 Rød"
+    "manuskript": "Nytårsforsæt holder alligevel aldrig. Det siger vi tit, og så bliver det ved snakken. Men i et amerikansk studie sagde 46 procent af dem, der lavede et nytårsforsæt, at de stadig var i gang et halvt år efter. Blandt dem, der bare ville ændre noget senere, var det 4 procent. Og dem, der lykkedes, troede oftere på, at de kunne, og var klar, før de gik i gang. Så vent ikke på senere. Sæt en dato i dag for, hvornår du går i gang. Kommenter START, så viser den gratis test dig, hvad der typisk får dig til at vente.",
+    "gatekeeper": "🟡 Gul"
   }
 ]
