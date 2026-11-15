@@ -21,3 +21,12 @@ Genereret i HeyGen (`text_to_video`, heygen-video-1, 9:16, 1080p, 5 sek., ca. 4 
 | haand-doerhaandtag-regn.mp4 | POV: en hånd hviler på en dørhåndtag i en entré, regn på ruden, jakke på knagen, hånden holder en pause og trykker håndtaget ned (Gemini (Veo), original 720x1280, 10 sek., udsnit 4,0–9,2 sek., uden lyd) | 13/11 Ansvar er ikke skyld |
 
 Overblik over alle klip: Notion-databasen "B-roll-bibliotek" under Visual Assets. Originalerne ligger i OneDrive: Life System Architect/04 Marketing/Content OS/B-roll/Situationer/.
+
+## Egne optagelser 15/11-2026 (Hagbarth, bibliotek og kontor) — 0 credits
+Klippet til 5 sek., 9:16, 1080x1920, uden lyd. Originaler: `C:\Work\Ai Content Income System\Pics til HeyGens\`.
+- bibliotek-gaar-mod-kameraet.mp4 — Hagbarth går ned gennem biblioteket mod kameraet
+- bibliotek-rejser-sig-og-gaar.mp4 — går mellem reolerne i biblioteket
+- bibliotek-saetter-sig-med-kaffe.mp4 — sætter sig ved cafébord med kop, murstensvæg
+- bibliotek-laeser-i-loungestol.mp4 — læser i orange loungestol
+- bibliotek-laeser-blad.mp4 — læser i et blad, blazer, tæt på
+- kontor-skriver-paa-pc.mp4 — skriver på pc ved skrivebord, notesbog på bordet
