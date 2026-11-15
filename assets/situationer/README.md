@@ -30,3 +30,8 @@ Klippet til 5 sek., 9:16, 1080x1920, uden lyd. Originaler: `C:\Work\Ai Content I
 - bibliotek-laeser-i-loungestol.mp4 — læser i orange loungestol
 - bibliotek-laeser-blad.mp4 — læser i et blad, blazer, tæt på
 - kontor-skriver-paa-pc.mp4 — skriver på pc ved skrivebord, notesbog på bordet
+
+## Gemini (Veo) 15/11-2026 — Gemini-abonnement, 0 HeyGen-credits
+Klippet til 5 sek., 9:16, 1080x1920, uden lyd. Prompts står i B-roll-biblioteket i Notion.
+- traeningstoej-lagt-frem-aften.mp4 — hænder lægger træningstøj og løbesko frem på stol ved sengen, aftenlys
+- gaatur-foedder-vaade-blade.mp4 — POV: fødder går på fortov med våde efterårsblade
