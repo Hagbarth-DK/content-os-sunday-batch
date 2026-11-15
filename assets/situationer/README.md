@@ -35,3 +35,4 @@ Klippet til 5 sek., 9:16, 1080x1920, uden lyd. Originaler: `C:\Work\Ai Content I
 Klippet til 5 sek., 9:16, 1080x1920, uden lyd. Prompts står i B-roll-biblioteket i Notion.
 - traeningstoej-lagt-frem-aften.mp4 — hænder lægger træningstøj og løbesko frem på stol ved sengen, aftenlys
 - gaatur-foedder-vaade-blade.mp4 — POV: fødder går på fortov med våde efterårsblade
+- kalender-dato-cirkles.mp4 — hånd tegner en cirkel om en dato i papirvægkalender
