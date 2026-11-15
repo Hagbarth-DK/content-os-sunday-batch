@@ -104,7 +104,7 @@
     "billedtekst": "Du venter på lysten, før du går i gang.\nI 94 forsøg klarede dem, der havde besluttet hvornår og hvor, sig bedre end dem, der bare havde et mål. Så beslut det nu: Når jeg kommer ind ad døren klokken fem, tager jeg træningstøjet på.\nKommenter START, så viser den gratis test dig, hvor du typisk går i stå.\n\n#motivation #struktur\n\n🤖 Skabt med AI (avatar, stemme og video).",
     "lyd": "Rolig tale.",
     "stemning": "Bibliotek, polo og vest, siddende, varm og nærværende.",
-    "kilde": "Gollwitzer PM, Sheeran P (2006). Implementation intentions and goal achievement: a meta-analysis of effects and processes. Adv Exp Soc Psychol 38:69-119. https://doi.org/10.1016/S0065-2601(06)38002-1 — 94 uafhængige test, over 8.000 deltagere, d = 0,65 (mellem til stor effekt). Sammenlignet oftest med deltagere, der allerede havde et mål. NB: ny metaanalyse (Sheeran, Listrom & Gollwitzer 2024, 642 test) finder mindre effekt på adfærd (d ≈ 0,27) — derfor 'klart bedre', ikke tal på effekten.",
+    "kilde": "Gollwitzer PM, Sheeran P (2006). Implementation intentions and goal achievement: a meta-analysis of effects and processes. Adv Exp Soc Psychol 38:69-119. https://doi.org/10.1016/S0065-2601(06)38002-1 — 94 uafhængige test, over 8.000 deltagere, d = 0,65 (mellem til stor effekt). Sammenlignet oftest med deltagere, der allerede havde et mål. NB: ny metaanalyse (Sheeran, Listrom & Gollwitzer 2024, 642 test) finder mindre effekt på adfærd (d ≈ 0,27) — derfor 'bedre', ikke 'klart bedre' og ikke tal på effekten.",
     "beats": [
       [
         "AV",
@@ -115,7 +115,7 @@
       [
         "GRAF",
         "Forståelse",
-        "Men forskerne har kigget på 94 forsøg med over 8.000 mennesker. Dem, der på forhånd havde besluttet hvornår og hvor, klarede sig bedre end dem, der bare havde et mål.",
+        "Forskerne har kigget på 94 forsøg med over 8.000 mennesker. Dem, der på forhånd havde besluttet hvornår og hvor, klarede sig bedre end dem, der bare havde et mål.",
         "GRAF: Bare et mål / Hvornår + hvor = bedre"
       ],
       [
@@ -131,7 +131,7 @@
         "Nærbillede, zoom 1,25x. Tekst: Kommenter START"
       ]
     ],
-    "manuskript": "Du venter på lysten. Først når den kommer, går du i gang. Men du behøver ikke vente på den. Men forskerne har kigget på 94 forsøg med over 8.000 mennesker. Dem, der på forhånd havde besluttet hvornår og hvor, klarede sig bedre end dem, der bare havde et mål. På jobbet har et møde jo også et klokkeslæt og et lokale. Så beslut det nu, for eksempel: Når jeg kommer ind ad døren klokken fem, tager jeg træningstøjet på. Kommenter START, så viser den gratis test dig, hvor du typisk går i stå.",
+    "manuskript": "Du venter på lysten. Først når den kommer, går du i gang. Men du behøver ikke vente på den. Forskerne har kigget på 94 forsøg med over 8.000 mennesker. Dem, der på forhånd havde besluttet hvornår og hvor, klarede sig bedre end dem, der bare havde et mål. På jobbet har et møde jo også et klokkeslæt og et lokale. Så beslut det nu, for eksempel: Når jeg kommer ind ad døren klokken fem, tager jeg træningstøjet på. Kommenter START, så viser den gratis test dig, hvor du typisk går i stå.",
     "gatekeeper": "🟡 Gul"
   },
   {
