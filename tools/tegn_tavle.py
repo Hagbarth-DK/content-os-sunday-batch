@@ -72,8 +72,9 @@ def klip_billede(beskrivelse):
     m = re.search(r"([\w\-]+\.mp4)", beskrivelse)
     if not m:
         return None
-    fil = os.path.join(ROOT, "assets/broll", m.group(1))
-    if not os.path.exists(fil):
+    fil = next((os.path.join(ROOT, d, m.group(1)) for d in ("assets/broll", "assets/situationer")
+                if os.path.exists(os.path.join(ROOT, d, m.group(1)))), None)
+    if not fil:
         return None
     ud = "/tmp/_klip_frame.jpg"
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", "2.5", "-i", fil, "-frames:v", "1", ud], check=True)
