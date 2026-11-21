@@ -157,7 +157,10 @@ def tjek(p):
                 bool(sk) and re.sub(r"^[\"“”„«»\s]+", "", tale).lower().startswith(sk.rstrip("?").lower()),
                 f"tale starter: '{tale[:40]}'", "advarsel"))
     n = len(ord(tale))
-    res.append(("Længde ca. som Imans (højst ca. 120 ord)", n <= 120, f"{n} ord", "advarsel"))
+    # Længde-reglen (Scripting Framework, 21/11-2026): typisk 40-60 sek. tale, pejlemærke 45 sek.
+    # (ca. 105 ord), op til 90 sek. for en hel historie, aldrig under ca. 30 sek.
+    # Ca. 2,3 ord/sek. i rolig dansk tale: 30 sek. = ca. 70 ord, 90 sek. = ca. 200 ord.
+    res.append(("Længde som Imans (ca. 70-200 ord, typisk 90-140)", 70 <= n <= 200, f"{n} ord", "advarsel"))
     res += rytme(p)
     return res
 
