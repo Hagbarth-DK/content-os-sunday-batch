@@ -25,7 +25,8 @@ Kamera-koder (Hagbarth 21/11-2026, Scripting Framework → Klip-rytme og B-roll)
   [TÆT], [MEDIUM] eller [UDE] ([FORSKUDT] læses som [UDE]).
   Metode B: koden styrer den digitale beskæring af avataren (KAMERA nedenfor). Mangler
   koden, skifter beskæringen automatisk mellem helt billede og tæt.
-  Metode C: koden har valgt lookket i HeyGen, så beatets eget klip vises i helt billede.
+  Metode C: maks. 2 looks pr. video (ét pr. miljø, inde/ude, Hagbarth 21/11-2026). Beatets
+  klip er renderet med miljøets look; [TÆT] beskæres tæt, [MEDIUM] og [UDE] vises helt.
   Deles et langt beat i flere stykker, skifter de næste stykker automatisk, så der stadig
   er et billedskift.
 
@@ -202,7 +203,8 @@ def plan(beats, total, av_mappe=None, avatar_video=True):
         sidste_kode = kode
         for n, (a, c) in enumerate(chunk(b["s"], b["e"], lim)):
             if n == 0 and klip:
-                valgt = "MEDIUM"                 # Metode C: lookket er skiftet, helt billede
+                # Metode C: miljøets look (maks. 2 pr. video); koden styrer beskæringen
+                valgt = "TÆT" if kode == "TÆT" else "MEDIUM"
             elif n == 0 and kode:
                 valgt = kode
             elif n == 0 and k == 0:

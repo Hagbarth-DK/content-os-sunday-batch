@@ -16,6 +16,7 @@ Tilføjet 15/11-2026 (Hagbarth, rodårsag: B-roll blev ikke lavet i første omga
 Tilføjet 21/11-2026 (Hagbarth, dynamisk kamerastyring):
   - Advarsel, hvis to AV-beats lige efter hinanden har samme kamera-kode ([TÆT]/[MEDIUM]/[UDE];
     [FORSKUDT] læses som [UDE]).
+  - Advarsel, hvis en video har mere end 2 forskellige looks ("Look: …" i AV-beatenes billede).
 
 Tjekket her fanger kun det, der aldrig må slippe igennem (Låste regler i Notion),
 plus det, produktionen teknisk afhænger af. ❌ = stop, ⚠️ = advarsel.
@@ -66,6 +67,12 @@ def kamera_kode(beskrivelse):
     return "UDE" if k == "FORSKUDT" else k
 
 
+def look(beskrivelse):
+    """Lookket fra "Look: …" i en billedbeskrivelse (til og med første punktum/parentes), eller None."""
+    m = re.search(r"look:\s*([^.(\n]+)", beskrivelse or "", re.I)
+    return m.group(1).strip().rstrip(",").lower() if m else None
+
+
 def klip_fil(beskrivelse):
     m = re.search(r"([\w\-]+\.mp4)", beskrivelse or "")
     if not m:
@@ -106,6 +113,9 @@ def rytme(p):
             if ka and ka == kb:
                 ens.append(f"beat {i} og {i + 1}: [{ka}]")
     res.append(("Kamera-kode skifter mellem AV-beats lige efter hinanden", not ens, "; ".join(ens), "advarsel"))
+    # Maks. 2 lokationer/looks pr. video (Hagbarth 21/11-2026), læst fra "Look: …" i billedbeskrivelserne.
+    looks = sorted({look(b[3]) for b in beats if b[0] == "AV" and len(b) > 3 and look(b[3])})
+    res.append(("Maks. 2 looks pr. video", len(looks) <= 2, " · ".join(looks), "advarsel"))
     return res
 
 
