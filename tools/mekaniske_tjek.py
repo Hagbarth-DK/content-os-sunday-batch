@@ -13,6 +13,9 @@ Tilføjet 15/11-2026 (Hagbarth, rodårsag: B-roll blev ikke lavet i første omga
   - Hvert KLIP/SIT-beat skal nævne et .mp4, der findes i assets/broll eller assets/situationer.
   - Ingen pladsholdertekst (fx "Kandidat", "mangler") i billedbeskrivelser.
 
+Tilføjet 21/11-2026 (Hagbarth, dynamisk kamerastyring):
+  - Advarsel, hvis to AV-beats lige efter hinanden har samme kamera-kode ([TÆT]/[MEDIUM]/[FORSKUDT]).
+
 Tjekket her fanger kun det, der aldrig må slippe igennem (Låste regler i Notion),
 plus det, produktionen teknisk afhænger af. ❌ = stop, ⚠️ = advarsel.
 """
@@ -49,6 +52,15 @@ def sek(talt_tekst):
     return n / ORD_PR_SEK
 
 
+KAMERA_KODE = re.compile(r"^\s*\[(TÆT|MEDIUM|FORSKUDT)\]", re.I)
+
+
+def kamera_kode(beskrivelse):
+    """Kamera-koden forrest i et beats billedbeskrivelse ([TÆT]/[MEDIUM]/[FORSKUDT]), eller None."""
+    m = KAMERA_KODE.match(beskrivelse or "")
+    return m.group(1).upper() if m else None
+
+
 def klip_fil(beskrivelse):
     m = re.search(r"([\w\-]+\.mp4)", beskrivelse or "")
     if not m:
@@ -79,6 +91,16 @@ def rytme(p):
     midt = beats[1:-1]
     ikke_av = sum(1 for b in midt if b[0] != "AV")
     res.append(("Midten er mest B-roll/grafik (Iman-stil)", ikke_av >= len(midt) / 2, f"{ikke_av} af {len(midt)} ikke-avatar", "advarsel"))
+    # Kamera-koder (Hagbarth 21/11-2026): aldrig samme kode på to AV-beats lige efter hinanden.
+    ens = []
+    for i in range(1, len(beats)):
+        a, b = beats[i - 1], beats[i]
+        if a[0] == "AV" and b[0] == "AV":
+            ka = kamera_kode(a[3] if len(a) > 3 else "")
+            kb = kamera_kode(b[3] if len(b) > 3 else "")
+            if ka and ka == kb:
+                ens.append(f"beat {i} og {i + 1}: [{ka}]")
+    res.append(("Kamera-kode skifter mellem AV-beats lige efter hinanden", not ens, "; ".join(ens), "advarsel"))
     return res
 
 

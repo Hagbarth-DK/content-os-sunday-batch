@@ -5,25 +5,51 @@ Input: avatar-video (HeyGen create_video_from_avatar, Twin V2) + SRT + en JSON-k
 {
   "skaermtekst": "Har du en *tandlægetid*",
   "beats": [
-    {"type": "AV",   "text": "..."},
+    {"type": "AV",   "text": "...", "billede": "[TÆT] Look: bibliotek, sort jakke"},
     {"type": "SIT",  "text": "...", "klip": "sti/til/klip.mp4"},
-    {"type": "GRAF", "text": "...", "grafik": [["Tandlæge:", "i kalenderen", "Tandlægen"], ...]},
+    {"type": "GRAF", "text": "...", "billede": "[MEDIUM] ...", "grafik": [["Tandlæge:", "i kalenderen", "Tandlægen"], ...]},
     ...
   ],
   "accent": ["ord1", "", "ord3", ...]  # accentord pr. sætning i rækkefølge ("" = intet)
 }
 grafik-linjer: [label, værdi, udløserord] — linjen toner frem, når udløserordet siges.
 
-Lyden er altid avatarens ubrudte talespor. Billedet skifter ovenpå.
+Kamera-koder (Hagbarth 21/11-2026, Scripting Framework → Klip-rytme og B-roll):
+  Billedbeskrivelsen ("billede", eller "beskrivelse") på et avatar-beat starter med
+  [TÆT], [MEDIUM] eller [FORSKUDT]. Koden styrer beskæringen af avataren (KAMERA nedenfor).
+  Mangler koden, skifter beskæringen automatisk mellem helt billede og tæt, som før.
+  Deles et langt beat i flere stykker, får første stykke koden og de næste skifter automatisk,
+  så der stadig er et billedskift.
+
+Metode B (låst 21/11-2026) for alle formater A–E: lyden er altid avatarens ubrudte talespor.
+Billedet skifter ovenpå.
 Brug: python3 tools/byg_reel.py config.json avatar.mp4 avatar.srt ud.mp4
 """
 import json, re, subprocess, sys, os, tempfile
 
 W, H, FPS = 1080, 1920, 25
-ZOOM = "crop=760:1350:160:60,scale=1080:1920"
-MAX_MID = 3.4      # midterstykker holdes under 4 sek.
-MAX_END = 5.5      # hook og CTA må være op til 6 sek.
+# Beskæring pr. kamera-kode. Avatar-videoen er 1080x1920.
+KAMERA = {
+    "TÆT": "crop=760:1350:160:60,scale=1080:1920",
+    "FORSKUDT": "crop=840:1493:190:120,scale=1080:1920",
+    "MEDIUM": "scale=1080:1920",
+}
+ZOOM = KAMERA["TÆT"]   # bevaret navn (tidligere eneste zoom)
+MAX_MID = 3.4      # klippegrænse i midten: holder Realisme-tjekkets 4,0 sek. med margin
+MAX_END = 5.5      # klippegrænse i hook og CTA: holder Realisme-tjekkets 6,0 sek. med margin
 SKAERM_SLUT = 2.5
+KODE_RE = re.compile(r"^\s*\[(TÆT|MEDIUM|FORSKUDT)\]", re.I)
+
+
+def kamera_kode(b):
+    """Kamera-koden forrest i beatets billedbeskrivelse, eller None."""
+    m = KODE_RE.match(b.get("billede") or b.get("beskrivelse") or "")
+    return m.group(1).upper() if m else None
+
+
+def skift(forrige):
+    """Automatisk skift, når koden mangler: helt billede ↔ tæt."""
+    return "TÆT" if forrige == "MEDIUM" else "MEDIUM"
 
 
 def run(cmd):
@@ -94,10 +120,10 @@ def chunk(t0, t1, maxlen):
 
 
 def plan(beats, total):
-    segs = []           # (start, slut, kilde, zoom)
+    segs = []           # (start, slut, kilde, kamera-kode eller None for klip)
     beats[0]["s"] = 0.0
     beats[-1]["e"] = total
-    zoom = False
+    forrige = None      # seneste avatar-beskæring
     for k, b in enumerate(beats):
         end = k in (0, len(beats) - 1)
         lim = MAX_END if end else MAX_MID
@@ -106,28 +132,36 @@ def plan(beats, total):
             sit_end = min(b["e"], b["s"] + klen)
             if 0.3 < b["e"] - sit_end < 1.2:      # undgå et kort hak bagefter
                 sit_end = b["e"] - 1.2
-            segs.append((b["s"], sit_end, b["klip"], False))
+            segs.append((b["s"], sit_end, b["klip"], None))
             if b["e"] - sit_end > 0.3:
                 for a, c in chunk(sit_end, b["e"], MAX_MID):
-                    zoom = not zoom
-                    segs.append((a, c, "AV", zoom))
+                    forrige = skift(forrige)
+                    segs.append((a, c, "AV", forrige))
             else:
-                segs[-1] = (b["s"], b["e"], b["klip"], False)
+                segs[-1] = (b["s"], b["e"], b["klip"], None)
             continue
-        for a, c in chunk(b["s"], b["e"], lim):
-            if not (k == 0 and a == 0.0):
-                zoom = not zoom
-            segs.append((a, c, "AV", zoom))
+        kode = kamera_kode(b)
+        if kode and kode == forrige:
+            sys.stderr.write(f"Advarsel: beat {k + 1} har samme kamera-kode [{kode}] som avataren lige før\n")
+        for n, (a, c) in enumerate(chunk(b["s"], b["e"], lim)):
+            if n == 0 and kode:
+                valgt = kode
+            elif n == 0 and k == 0:
+                valgt = "MEDIUM"                 # hook uden kode: helt billede, som før
+            else:
+                valgt = skift(forrige)
+            segs.append((a, c, "AV", valgt))
+            forrige = valgt
     return segs
 
 
 def render(segs, avatar, tmp):
     parts = []
-    for n, (a, c, src, z) in enumerate(segs):
+    for n, (a, c, src, kode) in enumerate(segs):
         out = os.path.join(tmp, f"s{n:02d}.mp4")
         d = c - a
         if src == "AV":
-            vf = (ZOOM + "," if z else "scale=1080:1920,") + f"fps={FPS},setsar=1"
+            vf = KAMERA[kode] + f",fps={FPS},setsar=1"
             run(["ffmpeg", "-y", "-ss", f"{a:.3f}", "-t", f"{d:.3f}", "-i", avatar, "-an",
                  "-vf", vf, "-c:v", "libx264", "-preset", "veryfast", "-crf", "18", "-pix_fmt", "yuv420p", out])
         else:
@@ -249,8 +283,8 @@ def main():
          "-vf", f"subtitles={ass}", "-c:v", "libx264", "-preset", "veryfast", "-crf", "20",
          "-pix_fmt", "yuv420p", "-r", str(FPS), "-c:a", "aac", "-b:a", "160k", "-shortest",
          "-movflags", "+faststart", out])
-    for a, c, src, z in segs:
-        print(f"{a:6.2f}-{c:6.2f}  {c-a:4.2f}s  {'AV-zoom' if src=='AV' and z else ('AV' if src=='AV' else os.path.basename(src))}")
+    for a, c, src, kode in segs:
+        print(f"{a:6.2f}-{c:6.2f}  {c-a:4.2f}s  {'AV-' + kode if src == 'AV' else os.path.basename(src)}")
     print("OK", out)
 
 
