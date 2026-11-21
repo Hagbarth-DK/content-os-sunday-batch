@@ -14,7 +14,8 @@ Tilføjet 15/11-2026 (Hagbarth, rodårsag: B-roll blev ikke lavet i første omga
   - Ingen pladsholdertekst (fx "Kandidat", "mangler") i billedbeskrivelser.
 
 Tilføjet 21/11-2026 (Hagbarth, dynamisk kamerastyring):
-  - Advarsel, hvis to AV-beats lige efter hinanden har samme kamera-kode ([TÆT]/[MEDIUM]/[FORSKUDT]).
+  - Advarsel, hvis to AV-beats lige efter hinanden har samme kamera-kode ([TÆT]/[MEDIUM]/[UDE];
+    [FORSKUDT] læses som [UDE]).
 
 Tjekket her fanger kun det, der aldrig må slippe igennem (Låste regler i Notion),
 plus det, produktionen teknisk afhænger af. ❌ = stop, ⚠️ = advarsel.
@@ -52,13 +53,17 @@ def sek(talt_tekst):
     return n / ORD_PR_SEK
 
 
-KAMERA_KODE = re.compile(r"^\s*\[(TÆT|MEDIUM|FORSKUDT)\]", re.I)
+KAMERA_KODE = re.compile(r"^\s*\[(TÆT|MEDIUM|UDE|FORSKUDT)\]", re.I)
 
 
 def kamera_kode(beskrivelse):
-    """Kamera-koden forrest i et beats billedbeskrivelse ([TÆT]/[MEDIUM]/[FORSKUDT]), eller None."""
+    """Kamera-koden forrest i et beats billedbeskrivelse ([TÆT]/[MEDIUM]/[UDE]), eller None.
+    [FORSKUDT] (gammel kode før 21/11-2026) læses som [UDE]."""
     m = KAMERA_KODE.match(beskrivelse or "")
-    return m.group(1).upper() if m else None
+    if not m:
+        return None
+    k = m.group(1).upper()
+    return "UDE" if k == "FORSKUDT" else k
 
 
 def klip_fil(beskrivelse):
