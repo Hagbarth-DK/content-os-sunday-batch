@@ -19,5 +19,5 @@ for b in open(f'{d}/tale.srt',encoding='utf-8').read().strip().split('\n\n'):
     out.append(f"{l[0]}\n{t(a)} --> {t(c)}\n{l[2]}\n")
 open(f'{d}/tale2.srt','w',encoding='utf-8').write('\n'.join(out))
 shutil.copy(klip,f'{d}/av/{beat}.mp4')
-r=subprocess.run(['python3','os.path.join(os.path.dirname(os.path.abspath(__file__)),'byg_reel.py')',f'{d}/config.json',f'{d}/tale2.mp3',f'{d}/tale2.srt',f'{d}/ud2.mp4','--av-mappe',f'{d}/av/'],capture_output=True,text=True)
+r=subprocess.run(['python3',os.path.join(os.path.dirname(os.path.abspath(__file__)),'byg_reel.py'),f'{d}/config.json',f'{d}/tale2.mp3',f'{d}/tale2.srt',f'{d}/ud2.mp4','--av-mappe',f'{d}/av/'],capture_output=True,text=True)
 print(r.stdout[-900:],r.stderr[-500:]); print('gammel',round(old_len,2),'ny',round(new_len,2))
