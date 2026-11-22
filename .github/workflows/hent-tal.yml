@@ -1,0 +1,73 @@
+name: Hent Instagram-tal
+
+# Henter tal pr. reel (visninger, rækkevidde, visningstid, likes, kommentarer,
+# keyword-kommentarer, gemt, delt) og skriver dem i Notion Content Library.
+# Bruges af marketingchefen (skill marketingchef, 22/11-2026).
+# Kører hver morgen før marketingchefen (mandag kl. 8.43 dansk tid), og når
+# Claude pusher til trigger/tal.txt. Nøglen printes aldrig.
+
+on:
+  schedule:
+    - cron: "41 5 * * *"   # kl. 6.41 dansk tid om vinteren, 7.41 om sommeren
+  workflow_dispatch: {}
+  push:
+    paths:
+      - "trigger/tal.txt"
+
+concurrency:
+  group: hent-tal
+  cancel-in-progress: false
+
+permissions:
+  contents: write   # gemmer følgertal i trigger/foelgere.csv
+  issues: write     # alarm-issue ved fejl
+
+jobs:
+  hent:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Hent tal
+        env:
+          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          IG_BUSINESS_ACCOUNT_ID: ${{ secrets.IG_BUSINESS_ACCOUNT_ID }}
+        run: python tools/hent_tal.py
+
+      - name: Gem følgertal
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add trigger/foelgere.csv
+          git diff --cached --quiet || (git commit -m "Følgertal $(date -u +%F)" && git push)
+
+      # Eget label, så publiceringens alarm-logik ikke lukker eller blander det.
+      - name: Alarm ved fejl
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          OWNER: ${{ github.repository_owner }}
+        run: |
+          gh label create alarm-tal --color D93F0B --description "Hentning af Instagram-tal fejlet" 2>/dev/null || true
+          BODY="$(printf '@%s\n\nHentningen af Instagram-tal fejlede. Se loggen.\n\nLog: %s' "$OWNER" "$RUN_URL")"
+          OPEN="$(gh issue list --label alarm-tal --state open --json number --jq '.[0].number')"
+          if [ -n "$OPEN" ]; then gh issue comment "$OPEN" --body "$BODY"; else gh issue create --title "🟠 Hentning af Instagram-tal fejlet $(date -u +%F)" --label alarm-tal --body "$BODY"; fi
+
+      - name: Luk alarm når det virker igen
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for n in $(gh issue list --label alarm-tal --state open --json number --jq '.[].number'); do
+            gh issue close "$n" --comment "✅ Løst: tallene blev hentet $(date -u +%F)."
+          done
