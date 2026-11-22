@@ -220,7 +220,7 @@ def save_test_stats(now):
         if new:
             f.write("dato,tests_i_alt,sidste_7_dage,sidste_30_dage,afmeldt\n")
         f.write(f"{now.date().isoformat()},{data['tests']},{data['sidste7']},{data['sidste30']},{data['afmeldt']}\n")
-    print(f"Testen: {data['tests']} i alt, {data['sidste7']} de sidste 7 dage")
+    print(f"Testen: {data['tests']} i alt, {data['sidste7']} de sidste 7 dage (kontakter på listen: {data.get('kontakter')})")
 
 
 def main():
