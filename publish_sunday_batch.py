@@ -32,6 +32,7 @@ import urllib.parse
 import urllib.request
 import json
 from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
 
 NOTION_API_KEY = os.environ["NOTION_API_KEY"]
 NOTION_DATABASE_ID = os.environ["NOTION_DATABASE_ID"]
@@ -40,6 +41,17 @@ IG_BUSINESS_ACCOUNT_ID = os.environ["IG_BUSINESS_ACCOUNT_ID"]
 
 NOTION_VERSION = "2022-06-28"
 GRAPH_VERSION = "v21.0"
+
+# Opslag udkommer kl. 9.00 dansk tid (Hagbarth 22/11-2026). GitHubs cron er i UTC
+# og kan blive forsinket, saa workflowet starter flere gange om dagen; en planlagt
+# koersel foer kl. 9 dansk tid goer intet. Manuelle koersler (trigger/run.txt,
+# Run workflow) publicerer med det samme.
+DK = ZoneInfo("Europe/Copenhagen")
+PUBLISH_HOUR_DK = 9
+
+
+def today_dk():
+    return datetime.now(DK).date().isoformat()
 
 REQUIRED_FIELDS = [
     "Videolink", "Billedtekst", "Keyword", "Platform", "Account", "Publiceringsdato",
@@ -70,7 +82,7 @@ def fetch_scheduled_posts():
         "filter": {
             "and": [
                 {"property": "Status", "select": {"equals": "Scheduled"}},
-                {"property": "Publiceringsdato", "date": {"on_or_before": datetime.now(timezone.utc).date().isoformat()}},
+                {"property": "Publiceringsdato", "date": {"on_or_before": today_dk()}},
             ]
         }
     }
@@ -166,7 +178,7 @@ def publish_container(container_id):
 
 def mark_published(page_id):
     url = f"https://api.notion.com/v1/pages/{page_id}"
-    today = datetime.now(timezone.utc).date().isoformat()
+    today = today_dk()
     body = {
         "properties": {
             "Status": {"select": {"name": "Published"}},
@@ -179,6 +191,12 @@ def mark_published(page_id):
 
 
 def main():
+    now_dk = datetime.now(DK)
+    if os.environ.get("GITHUB_EVENT_NAME") == "schedule" and now_dk.hour < PUBLISH_HOUR_DK:
+        print(f"For tidligt: kl. {now_dk:%H.%M} dansk tid. Opslag udkommer fra kl. {PUBLISH_HOUR_DK}.00.")
+        open("too_early.flag", "w").close()
+        return
+
     posts = fetch_scheduled_posts()
     if not posts:
         print("Ingen poster klar til publicering i dag.")

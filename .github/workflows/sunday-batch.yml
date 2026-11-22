@@ -2,15 +2,28 @@ name: Daglig Instagram-publicering
 
 on:
   schedule:
-    # Kører hver dag kl. 09:00 UTC (11:00 dansk sommertid / 10:00 vintertid),
-    # så hvert opslag udkommer på sin egen Publiceringsdato — ikke samlet om søndagen.
-    - cron: "0 9 * * *"
+    # Opslag udkommer kl. 9.00 dansk tid (Hagbarth 22/11-2026).
+    # Cron er i UTC og kan blive forsinket i timevis, så workflowet starter flere
+    # gange: 07.07 og 08.07 UTC rammer kl. 9.07 dansk tid i sommer- og vintertid
+    # (en kørsel før kl. 9 dansk tid gør intet), og 10.37 og 13.37 UTC fanger
+    # opslag, hvis en tidligere kørsel blev droppet. Et opslag publiceres kun én
+    # gang, fordi det sættes til Published. Ikke på hele klokkeslæt (GitHub
+    # forsinker dem mest).
+    - cron: "7 7 * * *"
+    - cron: "7 8 * * *"
+    - cron: "37 10 * * *"
+    - cron: "37 13 * * *"
   workflow_dispatch: {}  # tillader manuel kørsel fra Actions-fanen til test
   push:
     # Giver Claude en vej til at aktivere en kørsel med det samme uden Actions-API-
     # adgang (som er spærret via proxyen) — et push til trigger/run.txt er nok.
     paths:
       - "trigger/run.txt"
+
+# Aldrig to publiceringer samtidig (ellers kan et opslag blive postet to gange).
+concurrency:
+  group: instagram-publicering
+  cancel-in-progress: false
 
 permissions:
   contents: write   # keepalive-commit
@@ -60,7 +73,8 @@ jobs:
 
       # Lykkes en kørsel igen, lukkes åbne alarm-issues automatisk.
       - name: Luk alarm når det virker igen
-        if: success()
+        # Ikke hvis kørslen stoppede, fordi den var før kl. 9 dansk tid.
+        if: success() && hashFiles('too_early.flag') == ''
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
