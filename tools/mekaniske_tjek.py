@@ -41,7 +41,12 @@ FORKORTELSER = r"(?<![\wæøå])(fx|f\.eks\.|bl\.a\.|evt\.|ca\.|osv\.|mht\.|dvs\
 
 
 def talt(manus):
-    return re.sub(r"\[[^\]]*\]", " ", manus)
+    """Fjerner billedbeskrivelser i [ ... ], også indlejrede som [AV | [TÆT] Look: …] (rettet 22/11-2026:
+    kamera-koderne fra 21/11 fik ellers beskrivelsen til at tælle som tale)."""
+    forrige = None
+    while forrige != manus:
+        forrige, manus = manus, re.sub(r"\[[^\[\]]*\]", " ", manus)
+    return manus
 
 
 def ord(t):
