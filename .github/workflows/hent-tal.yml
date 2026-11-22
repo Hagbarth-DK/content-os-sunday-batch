@@ -47,7 +47,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add trigger/foelgere.csv
+          git add trigger/foelgere.csv trigger/testtal.csv 2>/dev/null || git add trigger/foelgere.csv
           git diff --cached --quiet || (git commit -m "Følgertal $(date -u +%F)" && git push)
 
       # Eget label, så publiceringens alarm-logik ikke lukker eller blander det.

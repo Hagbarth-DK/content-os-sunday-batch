@@ -200,8 +200,32 @@ def save_followers(now):
     print(f"Følgere: {data.get('followers_count')}")
 
 
+TEST_STATS_URL = "https://bejewelled-dragon-5e69df.netlify.app/.netlify/functions/stats"
+
+
+def save_test_stats(now):
+    """Antal, der har taget testen (kun tal, aldrig navne), til trigger/testtal.csv."""
+    try:
+        with urllib.request.urlopen(TEST_STATS_URL, timeout=60) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+    except Exception as e:
+        print(f"Testens tal kunne ikke hentes: {e}")
+        return
+    if not data.get("ok"):
+        print("Testens tal kunne ikke hentes (Brevo svarede ikke).")
+        return
+    path = os.path.join("trigger", "testtal.csv")
+    new = not os.path.exists(path)
+    with open(path, "a", encoding="utf-8") as f:
+        if new:
+            f.write("dato,tests_i_alt,sidste_7_dage,sidste_30_dage,afmeldt\n")
+        f.write(f"{now.date().isoformat()},{data['tests']},{data['sidste7']},{data['sidste30']},{data['afmeldt']}\n")
+    print(f"Testen: {data['tests']} i alt, {data['sidste7']} de sidste 7 dage")
+
+
 def main():
     now = datetime.now(DK)
+    save_test_stats(now)
     posts = fetch_published()
     media = fetch_ig_media()
     by_id = {m["id"]: m for m in media}
