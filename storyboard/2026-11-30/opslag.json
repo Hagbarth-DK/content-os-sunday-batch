@@ -41,24 +41,24 @@
     "GRAF",
     "Forståelse",
     "Og kun omkring tre ud af ti blev færdige inden for deres eget gæt.",
-    "GRAF over avatar: 3 ud af 10 nåede det"
+    "GRAF over avatar: Omkring 3 ud af 10 nåede det"
    ],
    [
     "KLIP",
     "Forståelse",
-    "Når planen skrider, føler du dig bagud, og så går det i stå.",
+    "Når planen skrider, føler man sig let bagud. Så går det i stå.",
     "speedbaad-taber-fart.mp4: speedbåden sætter farten ned"
    ],
    [
     "KLIP",
     "Forståelse",
-    "På jobbet lægger du jo luft ind i planen, fordi du ved, det trækker ud.",
+    "På jobbet lægger du måske luft ind i planen, fordi du ved, det trækker ud.",
     "orkanens-oje-kontor.mp4: travlt kontor, notesbogen ligger stille"
    ],
    [
     "AV",
     "Handling",
-    "Men derhjemme planlægger du, som om alt går, som det skal.",
+    "Men derhjemme planlægger du tit, som om alt går, som det skal.",
     "[MEDIUM] Look: skov."
    ],
    [
@@ -80,7 +80,7 @@
   "kilde": "Buehler R, Griffin D, Ross M (1994). Exploring the planning fallacy: Why people underestimate their task completion times. J Pers Soc Psychol 67(3):366-381. https://doi.org/10.1037/0022-3514.67.3.366 — 37 psykologistuderende (Canada): gennemsnitligt gæt 33,9 dage, faktisk tid 55,5 dage, ca. 30 % færdige inden for eget gæt. Studerende, ikke voksne med job.",
   "spaendingsfelt": "1) Konfronterende: Du ved ikke, hvor lang tid det tager. Du tror det bare, hver gang. 2) Empatisk: Det er ikke dig, der er doven, når planen skrider. Planen var lagt efter den bedste dag. 3) System-analytisk: På jobbet bruger du erfaringstal og buffer. Derhjemme planlægger du efter håb. Spændingsfelt: den samme person, der lægger luft ind i projektplanen på jobbet, planlægger sit eget liv uden luft og kalder det bagefter manglende disciplin.",
   "noter": "Serie: Myte 1 af 4 (Scripting Framework → Serier). Videoformat: A · Opskrift: Authority & Lifestyle. Grafik: 37 studerende / knap 34 mod godt 55 dage / 3 ud af 10. Knowledge Hub-kilder: ingen ud over Content Pillars (søjle 2) og idébanken. Øhh: efter \"Men derhjemme\" (valgfrit). Idébank: 420be9a8e3e681ce99bbcb6e72ac0b4d.",
-  "manuskript": "Myte 1: Den her gang holder planen. Jeg ved jo godt, hvor lang tid det tager. Det siger vi tit, og så skrider planen alligevel. 37 studerende i Canada skulle gætte, hvor lang tid deres afsluttende opgave ville tage. I snit gættede de på knap 34 dage. Det tog godt 55. Og kun omkring tre ud af ti blev færdige inden for deres eget gæt. Når planen skrider, føler du dig bagud, og så går det i stå. På jobbet lægger du jo luft ind i planen, fordi du ved, det trækker ud. Men derhjemme planlægger du, som om alt går, som det skal. Så næste gang du sætter tid af, så tjek, hvor lang tid det tog sidst. Kommenter START, så viser den gratis test dig, hvor dine planer typisk skrider."
+  "manuskript": "Myte 1: Den her gang holder planen. Jeg ved jo godt, hvor lang tid det tager. Det siger vi tit, og så skrider planen alligevel. 37 studerende i Canada skulle gætte, hvor lang tid deres afsluttende opgave ville tage. I snit gættede de på knap 34 dage. Det tog godt 55. Og kun omkring tre ud af ti blev færdige inden for deres eget gæt. Når planen skrider, føler man sig let bagud. Så går det i stå. På jobbet lægger du måske luft ind i planen, fordi du ved, det trækker ud. Men derhjemme planlægger du tit, som om alt går, som det skal. Så næste gang du sætter tid af, så tjek, hvor lang tid det tog sidst. Kommenter START, så viser den gratis test dig, hvor dine planer typisk skrider."
  },
  {
   "id": "B2",
@@ -117,14 +117,14 @@
    [
     "GRAF",
     "Forståelse",
-    "hvor de kun tjekkede mail tre gange om dagen.",
-    "GRAF over avatar: Uge 1: mail 3 gange om dagen"
+    "hvor de skulle holde sig til mail tre gange om dagen.",
+    "GRAF over avatar: Én uge: mail 3 gange om dagen, notifikationer slået fra"
    ],
    [
     "GRAF",
     "Forståelse",
     "Og en uge, hvor de tjekkede, så tit de ville.",
-    "GRAF over avatar: Uge 2: så tit de ville"
+    "GRAF over avatar: Én uge: så tit de ville"
    ],
    [
     "GRAF",
@@ -135,7 +135,7 @@
    [
     "KLIP",
     "Forståelse",
-    "Og det er jo også sådan, jobbet følger med dig hjem om aftenen.",
+    "Og mailen er en af de måder, jobbet følger med dig hjem på.",
     "haand-doerhaandtag-regn.mp4: hånden på dørhåndtaget i entréen"
    ],
    [
@@ -157,13 +157,13 @@
     "[TÆT] Nærbillede, zoom 1,25x. Tekst: Kommenter START"
    ]
   ],
-  "billedtekst": "Mailen giver ro, når du holder øje med den hele dagen. Sådan føles det i hvert fald.\nI et canadisk forsøg prøvede 124 voksne en uge med mail tre gange om dagen og en uge, hvor de tjekkede, så tit de ville. I ugen med færre tjek var de lidt mindre stressede i hverdagen. Så vælg tre faste tidspunkter til mailen, og slå notifikationerne fra ind imellem.\nKommenter START, så viser den gratis test dig, hvor jobbet tager tiden fra dit eget liv.\nNy myte hver dag i denne uge.\n\n#mail #arbejdsliv\n\n🤖 Skabt med AI (avatar, stemme og video).",
+  "billedtekst": "Mailen giver ro, når du holder øje med den hele dagen. Sådan føles det i hvert fald.\nI et canadisk forsøg prøvede 124 voksne en uge, hvor de skulle holde sig til mail tre gange om dagen med notifikationerne slået fra, og en uge, hvor de tjekkede, så tit de ville. I ugen med færre tjek var de lidt mindre stressede i hverdagen. Så vælg tre faste tidspunkter til mailen, og slå notifikationerne fra ind imellem.\nKommenter START, så viser den gratis test dig, hvor jobbet tager tiden fra dit eget liv.\nNy myte hver dag i denne uge.\n\n#mail #arbejdsliv\n\n🤖 Skabt med AI (avatar, stemme og video).",
   "lyd": "Rolig tale.",
   "stemning": "Skoven, blå jakke (standardlook).",
   "kilde": "Kushlev K, Dunn EW (2015). Checking email less frequently reduces stress. Computers in Human Behavior 43:220-228. https://doi.org/10.1016/j.chb.2014.11.005 — 124 voksne, to uger: én uge med mail højst 3 gange om dagen og notifikationer slået fra, én uge frit. Lavere daglig stress i ugen med færre tjek. Feltforsøg; deltagerne overholdt ikke helt de 3 gange.",
   "spaendingsfelt": "1) Konfronterende: Du tjekker ikke mailen for at have styr på det. Du tjekker den, fordi du ikke kan lade være. 2) Empatisk: Det føles ansvarligt at holde øje, og det er det jo også på jobbet. 3) System-analytisk: Indbakken er en åben kanal fra jobbet ind i resten af livet; uden faste tidspunkter har jobbet altid forkørselsret. Spændingsfelt: det, der føles som kontrol, er det, der holder jobbet tændt hele aftenen.",
   "noter": "Serie: Myte 2 af 4. Videoformat: A · Opskrift: Authority & Lifestyle. Grafik: 124 voksne / 3 gange om dagen / færre tjek = mindre stress. Knowledge Hub-kilder: Content Pillars (søjle 1) og idébanken. Øhh: efter \"Så gør det\" (valgfrit). Idébank: 420be9a8e3e68102bb2be70bf2ab2f7f.",
-  "manuskript": "Myte 2: Mailen giver ro, når du holder øje med den hele dagen. Så føles det, som om du har styr på tingene. Men i et canadisk forsøg prøvede 124 voksne en uge, hvor de kun tjekkede mail tre gange om dagen. Og en uge, hvor de tjekkede, så tit de ville. I ugen med færre tjek var de lidt mindre stressede i hverdagen. Og det er jo også sådan, jobbet følger med dig hjem om aftenen. Så gør det i to trin. Et: vælg tre faste tidspunkter om dagen til mailen. To: slå notifikationerne fra ind imellem, så du ikke bliver hevet ind hele tiden. Kommenter START, så viser den gratis test dig, hvor jobbet tager tiden fra dit eget liv."
+  "manuskript": "Myte 2: Mailen giver ro, når du holder øje med den hele dagen. Så føles det, som om du har styr på tingene. Men i et canadisk forsøg prøvede 124 voksne en uge, hvor de skulle holde sig til mail tre gange om dagen. Og en uge, hvor de tjekkede, så tit de ville. I ugen med færre tjek var de lidt mindre stressede i hverdagen. Og mailen er en af de måder, jobbet følger med dig hjem på. Så gør det i to trin. Et: vælg tre faste tidspunkter om dagen til mailen. To: slå notifikationerne fra ind imellem, så du ikke bliver hevet ind hele tiden. Kommenter START, så viser den gratis test dig, hvor jobbet tager tiden fra dit eget liv."
  },
  {
   "id": "B3",
@@ -194,7 +194,7 @@
    [
     "GRAF",
     "Forståelse",
-    "I forsøg i USA fik deltagerne et mål, de ikke nåede at gøre færdigt.",
+    "I laboratorieforsøg i USA skulle studerende tænke på et mål, de ikke havde nået.",
     "GRAF over avatar: Ufærdigt mål"
    ],
    [
@@ -212,13 +212,13 @@
    [
     "AV",
     "Forståelse",
-    "De behøvede altså ikke gøre det færdigt først.",
+    "De behøvede altså ikke gøre det færdigt først. Planen var nok.",
     "[MEDIUM] Look: skov."
    ],
    [
     "KLIP",
     "Handling",
-    "På jobbet får opgaven en dato, og så kan du slippe den.",
+    "Det minder om jobbet, hvor opgaven får en dato i kalenderen.",
     "haand-skriver-i-notesbog.mp4: hånd skriver i notesbog, kaffekop ved siden af"
    ],
    [
@@ -234,13 +234,13 @@
     "[TÆT] Nærbillede, zoom 1,25x. Tekst: Kommenter START"
    ]
   ],
-  "billedtekst": "Opgaven slipper dig først, når den er lavet. Så ligger den og fylder hele aftenen.\nI forsøg i USA gav et ufærdigt mål flere forstyrrende tanker, mens deltagerne lavede noget andet. Når de lavede en konkret plan for målet, forsvandt det. Så skriv det næste skridt ned, og hvornår du gør det.\nKommenter START, så viser den gratis test dig, hvad der typisk ligger og fylder hos dig.\nNy myte hver dag i denne uge.\n\n#planlægning #struktur\n\n🤖 Skabt med AI (avatar, stemme og video).",
+  "billedtekst": "Opgaven slipper dig først, når den er lavet. Så ligger den og fylder hele aftenen.\nI laboratorieforsøg med studerende i USA gav et ufærdigt mål flere forstyrrende tanker, mens de lavede noget andet. Når de lavede en konkret plan for målet, forsvandt det. Så skriv det næste skridt ned, og hvornår du gør det.\nKommenter START, så viser den gratis test dig, hvad der typisk ligger og fylder hos dig.\nNy myte hver dag i denne uge.\n\n#planlægning #struktur\n\n🤖 Skabt med AI (avatar, stemme og video).",
   "lyd": "Rolig tale.",
   "stemning": "Skoven, blå jakke (standardlook).",
   "kilde": "Masicampo EJ, Baumeister RF (2011). Consider it done! Plan making can eliminate the cognitive effects of unfulfilled goals. J Pers Soc Psychol 101(4):667-683. https://doi.org/10.1037/a0024192 — flere laboratorieforsøg med studerende: ufærdige mål gav påtrængende tanker under en anden læseopgave og dårligere præstation i en anden opgave. En specifik plan for målet fjernede effekterne.",
   "spaendingsfelt": "1) Konfronterende: Det er ikke opgaven, der fylder. Det er, at du ikke har besluttet, hvornår du gør den. 2) Empatisk: Du er ikke dårlig til at koble af. Hovedet holder bare fast i det, der ikke har en plan. 3) System-analytisk: På jobbet har hver opgave en ejer og en dato i systemet; derhjemme ligger den i hovedet. Spændingsfelt: man tror, man skal gøre mere for at få ro, men det, der giver ro, er en beslutning om hvornår.",
   "noter": "Serie: Myte 3 af 4. Videoformat: A · Opskrift: Authority & Lifestyle. Grafik: ufærdigt mål / forstyrrende tanker / konkret plan. Knowledge Hub-kilder: Content Pillars (søjle 4) og idébanken (beslægtet med idé 4.1–4.3 'Den lille opgave, der fylder hele dagen'). Øhh: efter \"Så skriv\" (valgfrit). Idébank: 420be9a8e3e68181acffc28dd88eb68a.",
-  "manuskript": "Myte 3: Opgaven slipper dig først, når den er lavet. Så ligger den og fylder hele aftenen, selvom du er gået hjem. I forsøg i USA fik deltagerne et mål, de ikke nåede at gøre færdigt. Det gav flere forstyrrende tanker, mens de lavede noget helt andet. Men når de lavede en konkret plan for målet, forsvandt det. De behøvede altså ikke gøre det færdigt først. På jobbet får opgaven en dato, og så kan du slippe den. Så skriv det næste skridt ned, og hvornår du gør det. Kommenter START, så viser den gratis test dig, hvad der typisk ligger og fylder hos dig."
+  "manuskript": "Myte 3: Opgaven slipper dig først, når den er lavet. Så ligger den og fylder hele aftenen, selvom du er gået hjem. I laboratorieforsøg i USA skulle studerende tænke på et mål, de ikke havde nået. Det gav flere forstyrrende tanker, mens de lavede noget helt andet. Men når de lavede en konkret plan for målet, forsvandt det. De behøvede altså ikke gøre det færdigt først. Planen var nok. Det minder om jobbet, hvor opgaven får en dato i kalenderen. Så skriv det næste skridt ned, og hvornår du gør det. Kommenter START, så viser den gratis test dig, hvad der typisk ligger og fylder hos dig."
  },
  {
   "id": "B4",
@@ -283,8 +283,8 @@
    [
     "GRAF",
     "Forståelse",
-    "Lidt flere af dem fik trænet hver uge, også i ugerne efter.",
-    "GRAF over avatar: Lidt flere trænede hver uge"
+    "Lidt flere af dem trænede mindst én gang om ugen end dem uden lydbog.",
+    "GRAF over avatar: Lidt flere trænede mindst én gang om ugen"
    ],
    [
     "AV",
@@ -311,12 +311,12 @@
     "[TÆT] Nærbillede, zoom 1,25x. Tekst: Kommenter START"
    ]
   ],
-  "billedtekst": "Træningen skal bare overstås. Du må tage dig sammen.\nI et amerikansk forsøg med knap 6.800 fitnessmedlemmer fik nogle en gratis lydbog og besked på kun at høre den, når de trænede. Lidt flere af dem fik trænet hver uge, også i ugerne efter. Så find noget, du glæder dig til, og spar det til gåturen eller træningen. Det kan hjælpe.\nKommenter START, så viser den gratis test dig, hvad der typisk står i vejen for dig.\nNy myte hver dag i denne uge.\n\n#træning #hverdag\n\n🤖 Skabt med AI (avatar, stemme og video).",
+  "billedtekst": "Træningen skal bare overstås. Du må tage dig sammen.\nI et amerikansk forsøg med knap 6.800 fitnessmedlemmer fik nogle en gratis lydbog og besked på kun at høre den, når de trænede. Lidt flere af dem trænede mindst én gang om ugen end dem uden lydbog, også i ugerne efter. Så find noget, du glæder dig til, og spar det til gåturen eller træningen. Det kan hjælpe.\nKommenter START, så viser den gratis test dig, hvad der typisk står i vejen for dig.\nNy myte hver dag i denne uge.\n\n#træning #hverdag\n\n🤖 Skabt med AI (avatar, stemme og video).",
   "lyd": "Rolig tale.",
   "stemning": "Skoven, blå jakke (standardlook).",
   "kilde": "Kirgios EL, Mandel GH, Park Y, Milkman KL, Gromet DM, Kay JS, Duckworth AL (2020). Teaching temptation bundling to boost exercise: A field experiment. Organizational Behavior and Human Decision Processes 161:20-35. https://doi.org/10.1016/j.obhdp.2020.09.003 — N = 6.792 i et 4-ugers træningsprogram. Lydbog + opfordring øgede sandsynligheden for en ugentlig træning med 10–14 % under og op til 10 uger efter i artiklen (17 uger kun i tillægsmateriale). Selve opfordringen gav kun en beskeden ekstra effekt i forhold til lydbogen alene.",
   "spaendingsfelt": "1) Konfronterende: 'Tag dig sammen' er en plan, der allerede er fejlet. 2) Empatisk: Du er træt efter jobbet, og det er ikke en karakterbrist at vælge sofaen. 3) System-analytisk: Det, der skal gøres, konkurrerer med det, du har lyst til. Kobl dem, så konkurrencen forsvinder. Spændingsfelt: viljestyrke føles som det ansvarlige valg, men det er designet af situationen, der afgør, om det sker.",
   "noter": "Serie: Myte 4 af 4. Videoformat: A · Opskrift: Authority & Lifestyle. Grafik: knap 6.800 deltagere / lydbog kun ved træning / lidt flere trænede hver uge. Knowledge Hub-kilder: Content Pillars (søjle 3) og idébanken. Øhh: efter \"Du behøver altså\" (valgfrit). Idébank: 420be9a8e3e68120a997ccae04ba38a4.",
-  "manuskript": "Myte 4: Træningen skal bare overstås. Du må tage dig sammen. Så bider du tænderne sammen, og en dag står tasken bare i entréen. Men i et amerikansk forsøg med knap 6.800 fitnessmedlemmer fik nogle en gratis lydbog og besked på kun at høre den, når de trænede. Lidt flere af dem fik trænet hver uge, også i ugerne efter. Så det kan hjælpe at koble det til noget, du glæder dig til. Et: find noget, du glæder dig til, for eksempel en podcast. To: spar den til gåturen eller træningen, og hør den kun der. Kommenter START, så viser den gratis test dig, hvad der typisk står i vejen for dig."
+  "manuskript": "Myte 4: Træningen skal bare overstås. Du må tage dig sammen. Så bider du tænderne sammen, og en dag står tasken bare i entréen. Men i et amerikansk forsøg med knap 6.800 fitnessmedlemmer fik nogle en gratis lydbog og besked på kun at høre den, når de trænede. Lidt flere af dem trænede mindst én gang om ugen end dem uden lydbog. Så det kan hjælpe at koble det til noget, du glæder dig til. Et: find noget, du glæder dig til, for eksempel en podcast. To: spar den til gåturen eller træningen, og hør den kun der. Kommenter START, så viser den gratis test dig, hvad der typisk står i vejen for dig."
  }
 ]
