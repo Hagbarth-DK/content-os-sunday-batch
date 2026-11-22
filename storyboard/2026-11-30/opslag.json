@@ -200,13 +200,13 @@
    [
     "GRAF",
     "Forståelse",
-    "Det gav flere forstyrrende tanker, mens de lavede noget helt andet.",
-    "GRAF over avatar: Ufærdigt mål = flere forstyrrende tanker"
+    "Så fik de flere tanker, der forstyrrede dem, mens de lavede noget helt andet.",
+    "GRAF over avatar: Ufærdigt mål = flere tanker, der forstyrrer"
    ],
    [
     "GRAF",
     "Forståelse",
-    "Men når de lavede en konkret plan for målet, forsvandt det.",
+    "Men når de lavede en konkret plan for målet, forsvandt tankerne.",
     "GRAF over avatar: Konkret plan = tankerne forsvandt"
    ],
    [
@@ -234,13 +234,13 @@
     "[TÆT] Nærbillede, zoom 1,25x. Tekst: Kommenter START"
    ]
   ],
-  "billedtekst": "Opgaven slipper dig først, når den er lavet. Så ligger den og fylder hele aftenen.\nI laboratorieforsøg med studerende i USA gav et ufærdigt mål flere forstyrrende tanker, mens de lavede noget andet. Når de lavede en konkret plan for målet, forsvandt det. Så skriv det næste skridt ned, og hvornår du gør det.\nKommenter START, så viser den gratis test dig, hvad der typisk ligger og fylder hos dig.\nNy myte hver dag i denne uge.\n\n#planlægning #struktur\n\n🤖 Skabt med AI (avatar, stemme og video).",
+  "billedtekst": "Myte 3: Opgaven slipper dig først, når den er lavet. Så ligger den og fylder hele aftenen.\nI laboratorieforsøg med studerende i USA fik de flere tanker, der forstyrrede dem, når de havde et mål, de ikke havde nået. Når de lavede en konkret plan for målet, forsvandt tankerne. Så skriv det næste skridt ned, og hvornår du gør det.\nKommenter START, så viser den gratis test dig, hvad der typisk ligger og fylder hos dig.\nNy myte hver dag i denne uge.\n\n#planlægning #struktur\n\n🤖 Skabt med AI (avatar, stemme og video).",
   "lyd": "Rolig tale.",
   "stemning": "Skoven, blå jakke (standardlook).",
   "kilde": "Masicampo EJ, Baumeister RF (2011). Consider it done! Plan making can eliminate the cognitive effects of unfulfilled goals. J Pers Soc Psychol 101(4):667-683. https://doi.org/10.1037/a0024192 — flere laboratorieforsøg med studerende: ufærdige mål gav påtrængende tanker under en anden læseopgave og dårligere præstation i en anden opgave. En specifik plan for målet fjernede effekterne.",
   "spaendingsfelt": "1) Konfronterende: Det er ikke opgaven, der fylder. Det er, at du ikke har besluttet, hvornår du gør den. 2) Empatisk: Du er ikke dårlig til at koble af. Hovedet holder bare fast i det, der ikke har en plan. 3) System-analytisk: På jobbet har hver opgave en ejer og en dato i systemet; derhjemme ligger den i hovedet. Spændingsfelt: man tror, man skal gøre mere for at få ro, men det, der giver ro, er en beslutning om hvornår.",
-  "noter": "Serie: Myte 3 af 4. Videoformat: A · Opskrift: Authority & Lifestyle. Grafik: ufærdigt mål / forstyrrende tanker / konkret plan. Knowledge Hub-kilder: Content Pillars (søjle 4) og idébanken (beslægtet med idé 4.1–4.3 'Den lille opgave, der fylder hele dagen'). Øhh: efter \"Så skriv\" (valgfrit). Idébank: 420be9a8e3e68181acffc28dd88eb68a.",
-  "manuskript": "Myte 3: Opgaven slipper dig først, når den er lavet. Så ligger den og fylder hele aftenen, selvom du er gået hjem. I laboratorieforsøg i USA skulle studerende tænke på et mål, de ikke havde nået. Det gav flere forstyrrende tanker, mens de lavede noget helt andet. Men når de lavede en konkret plan for målet, forsvandt det. De behøvede altså ikke gøre det færdigt først. Planen var nok. Det minder om jobbet, hvor opgaven får en dato i kalenderen. Så skriv det næste skridt ned, og hvornår du gør det. Kommenter START, så viser den gratis test dig, hvad der typisk ligger og fylder hos dig."
+  "noter": "Serie: Myte 3 af 4. Videoformat: A · Opskrift: Authority & Lifestyle. Grafik: ufærdigt mål / forstyrrende tanker / konkret plan. Knowledge Hub-kilder: Content Pillars (søjle 4) og idébanken (beslægtet med idé 4.1–4.3 'Den lille opgave, der fylder hele dagen'). Øhh: lige før \"Så skriv det næste skridt ned\" (valgfrit). Idébank: 420be9a8e3e68181acffc28dd88eb68a.",
+  "manuskript": "Myte 3: Opgaven slipper dig først, når den er lavet. Så ligger den og fylder hele aftenen, selvom du er gået hjem. I laboratorieforsøg i USA skulle studerende tænke på et mål, de ikke havde nået. Så fik de flere tanker, der forstyrrede dem, mens de lavede noget helt andet. Men når de lavede en konkret plan for målet, forsvandt tankerne. De behøvede altså ikke gøre det færdigt først. Planen var nok. Det minder om jobbet, hvor opgaven får en dato i kalenderen. Så skriv det næste skridt ned, og hvornår du gør det. Kommenter START, så viser den gratis test dig, hvad der typisk ligger og fylder hos dig."
  },
  {
   "id": "B4",
@@ -251,7 +251,7 @@
   "soejle": "3. Kroppen som indgang",
   "tragt": "Activate",
   "indholdstype": "System-guide",
-  "hooktype": "Billede",
+  "hooktype": "Modsigelse (myte)",
   "vinkel": "Myte mod dokumenteret sandhed: træning er noget, man bare må tage sig sammen til",
   "look": "skov",
   "skaermtekst": "Myte 4: *Træningen* skal bare overstås",
@@ -259,7 +259,7 @@
    [
     "AV",
     "Genkendelse",
-    "Myte 4: Træningen skal bare overstås. Du må tage dig sammen.",
+    "Myte 4: Træningen skal bare overstås. Man må bare tage sig sammen.",
     "[TÆT] Look: Hagbarth Twin V2 - Video -- 2 (skov, blå jakke)."
    ],
    [
@@ -289,19 +289,19 @@
    [
     "AV",
     "Udbytte",
-    "Så det kan hjælpe at koble det til noget, du glæder dig til.",
+    "Så det kan hjælpe at koble træningen til noget, du glæder dig til.",
     "[MEDIUM] Look: skov."
    ],
    [
     "KLIP",
     "Handling",
-    "Et: find noget, du glæder dig til, for eksempel en podcast.",
+    "Først: find en podcast eller en lydbog, du rigtig gerne vil høre.",
     "gaatur-foedder-vaade-blade.mp4: fødder går på fortov med våde blade"
    ],
    [
     "KLIP",
     "Handling",
-    "To: spar den til gåturen eller træningen, og hør den kun der.",
+    "Og så: spar den til gåturen eller træningen, og hør den kun der.",
     "gaasko-ved-doeren-bilnoegler.mp4: gåsko ved døren"
    ],
    [
@@ -311,12 +311,12 @@
     "[TÆT] Nærbillede, zoom 1,25x. Tekst: Kommenter START"
    ]
   ],
-  "billedtekst": "Træningen skal bare overstås. Du må tage dig sammen.\nI et amerikansk forsøg med knap 6.800 fitnessmedlemmer fik nogle en gratis lydbog og besked på kun at høre den, når de trænede. Lidt flere af dem trænede mindst én gang om ugen end dem uden lydbog, også i ugerne efter. Så find noget, du glæder dig til, og spar det til gåturen eller træningen. Det kan hjælpe.\nKommenter START, så viser den gratis test dig, hvad der typisk står i vejen for dig.\nNy myte hver dag i denne uge.\n\n#træning #hverdag\n\n🤖 Skabt med AI (avatar, stemme og video).",
+  "billedtekst": "Myte 4: Træningen skal bare overstås. Man må bare tage sig sammen.\nDet siger vi tit. I et amerikansk forsøg med knap 6.800 fitnessmedlemmer fik nogle en gratis lydbog og besked på kun at høre den, når de trænede. Lidt flere af dem trænede mindst én gang om ugen end dem uden lydbog, også i ugerne efter. Så find en podcast eller en lydbog, du rigtig gerne vil høre, og spar den til gåturen eller træningen. Det kan hjælpe.\nKommenter START, så viser den gratis test dig, hvad der typisk står i vejen for dig.\nNy myte hver dag i denne uge.\n\n#træning #hverdag\n\n🤖 Skabt med AI (avatar, stemme og video).",
   "lyd": "Rolig tale.",
   "stemning": "Skoven, blå jakke (standardlook).",
   "kilde": "Kirgios EL, Mandel GH, Park Y, Milkman KL, Gromet DM, Kay JS, Duckworth AL (2020). Teaching temptation bundling to boost exercise: A field experiment. Organizational Behavior and Human Decision Processes 161:20-35. https://doi.org/10.1016/j.obhdp.2020.09.003 — N = 6.792 i et 4-ugers træningsprogram. Lydbog + opfordring øgede sandsynligheden for en ugentlig træning med 10–14 % under og op til 10 uger efter i artiklen (17 uger kun i tillægsmateriale). Selve opfordringen gav kun en beskeden ekstra effekt i forhold til lydbogen alene.",
   "spaendingsfelt": "1) Konfronterende: 'Tag dig sammen' er en plan, der allerede er fejlet. 2) Empatisk: Du er træt efter jobbet, og det er ikke en karakterbrist at vælge sofaen. 3) System-analytisk: Det, der skal gøres, konkurrerer med det, du har lyst til. Kobl dem, så konkurrencen forsvinder. Spændingsfelt: viljestyrke føles som det ansvarlige valg, men det er designet af situationen, der afgør, om det sker.",
-  "noter": "Serie: Myte 4 af 4. Videoformat: A · Opskrift: Authority & Lifestyle. Grafik: knap 6.800 deltagere / lydbog kun ved træning / lidt flere trænede hver uge. Knowledge Hub-kilder: Content Pillars (søjle 3) og idébanken. Øhh: efter \"Du behøver altså\" (valgfrit). Idébank: 420be9a8e3e68120a997ccae04ba38a4.",
-  "manuskript": "Myte 4: Træningen skal bare overstås. Du må tage dig sammen. Så bider du tænderne sammen, og en dag står tasken bare i entréen. Men i et amerikansk forsøg med knap 6.800 fitnessmedlemmer fik nogle en gratis lydbog og besked på kun at høre den, når de trænede. Lidt flere af dem trænede mindst én gang om ugen end dem uden lydbog. Så det kan hjælpe at koble det til noget, du glæder dig til. Et: find noget, du glæder dig til, for eksempel en podcast. To: spar den til gåturen eller træningen, og hør den kun der. Kommenter START, så viser den gratis test dig, hvad der typisk står i vejen for dig."
+  "noter": "Serie: Myte 4 af 4. Videoformat: A · Opskrift: Authority & Lifestyle. Grafik: knap 6.800 deltagere / lydbog kun ved træning / lidt flere trænede hver uge. Knowledge Hub-kilder: Content Pillars (søjle 3) og idébanken. Øhh: lige før \"Så det kan hjælpe\" (valgfrit). Idébank: 420be9a8e3e68120a997ccae04ba38a4.",
+  "manuskript": "Myte 4: Træningen skal bare overstås. Man må bare tage sig sammen. Så bider du tænderne sammen, og en dag står tasken bare i entréen. Men i et amerikansk forsøg med knap 6.800 fitnessmedlemmer fik nogle en gratis lydbog og besked på kun at høre den, når de trænede. Lidt flere af dem trænede mindst én gang om ugen end dem uden lydbog. Så det kan hjælpe at koble træningen til noget, du glæder dig til. Først: find en podcast eller en lydbog, du rigtig gerne vil høre. Og så: spar den til gåturen eller træningen, og hør den kun der. Kommenter START, så viser den gratis test dig, hvad der typisk står i vejen for dig."
  }
 ]
