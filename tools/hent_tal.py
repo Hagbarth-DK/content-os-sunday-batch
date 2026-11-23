@@ -55,6 +55,20 @@ METRICS = {
 }
 
 
+def write_daily_row(path, header, row):
+    """Én række pr. dato: en ny kørsel samme dag erstatter dagens række."""
+    lines = []
+    if os.path.exists(path):
+        with open(path, encoding="utf-8") as f:
+            lines = [l.rstrip("\n") for l in f if l.strip()]
+    if not lines:
+        lines = [header]
+    date = row.split(",", 1)[0]
+    lines = [lines[0]] + [l for l in lines[1:] if not l.startswith(date + ",")] + [row]
+    with open(path, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines) + "\n")
+
+
 def scrub(text):
     """Fjern noeglen fra en tekst, foer den printes."""
     return str(text).replace(IG_ACCESS_TOKEN, "***")
@@ -191,12 +205,8 @@ def save_followers(now):
     if status != 200:
         print(f"Foelgertal kunne ikke hentes: {scrub((data.get('error') or {}).get('message', status))}")
         return
-    path = os.path.join("trigger", "foelgere.csv")
-    new = not os.path.exists(path)
-    with open(path, "a", encoding="utf-8") as f:
-        if new:
-            f.write("dato,foelgere,opslag\n")
-        f.write(f"{now.date().isoformat()},{data.get('followers_count','')},{data.get('media_count','')}\n")
+    write_daily_row(os.path.join("trigger", "foelgere.csv"), "dato,foelgere,opslag",
+                    f"{now.date().isoformat()},{data.get('followers_count','')},{data.get('media_count','')}")
     print(f"Følgere: {data.get('followers_count')}")
 
 
@@ -214,12 +224,8 @@ def save_test_stats(now):
     if not data.get("ok"):
         print("Testens tal kunne ikke hentes (Brevo svarede ikke).")
         return
-    path = os.path.join("trigger", "testtal.csv")
-    new = not os.path.exists(path)
-    with open(path, "a", encoding="utf-8") as f:
-        if new:
-            f.write("dato,tests_i_alt,sidste_7_dage,sidste_30_dage,afmeldt\n")
-        f.write(f"{now.date().isoformat()},{data['tests']},{data['sidste7']},{data['sidste30']},{data['afmeldt']}\n")
+    write_daily_row(os.path.join("trigger", "testtal.csv"), "dato,tests_i_alt,sidste_7_dage,sidste_30_dage,afmeldt",
+                    f"{now.date().isoformat()},{data['tests']},{data['sidste7']},{data['sidste30']},{data['afmeldt']}")
     print(f"Testen: {data['tests']} i alt, {data['sidste7']} de sidste 7 dage (kontakter på listen: {data.get('kontakter')})")
 
 
